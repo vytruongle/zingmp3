@@ -1,0 +1,84 @@
+@import "../helper/mixin";
+@import "../helper/variable";
+
+.listSong {
+  ul {
+    padding: 0;
+    li {
+      padding: 8px;
+      &:hover {
+        background-color: rgba($color: #fff, $alpha: 0.3);
+        border-radius: 5px;
+        .playIcon {
+          display: block;
+        }
+        img {
+          filter: brightness(30%);
+        }
+        .heartIcon {
+          display: block;
+        }
+      }
+      &.active {
+        background-color: rgba($color: $bg-item, $alpha: 1);
+        border-radius: 5px;
+        .playIcon {
+          display: block;
+        }
+        img {
+          filter: brightness(30%);
+        }
+        p {
+          color: $primary;
+          font-weight: 400;
+        }
+      }
+    }
+  }
+
+  .songImg {
+    margin-right: 8px;
+    position: relative;
+    img {
+      object-fit: cover;
+      width: 60px;
+      border-radius: 5px;
+    }
+    .playIcon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      @include stylesIcon($primary, $fs-4);
+      display: none;
+    }
+  }
+  .infoSong {
+    color: $primary;
+    line-height: 0.8;
+
+    h3 {
+      font-size: $fs-3;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 180px;
+    }
+    p {
+      font-size: calc(($fs-3) - 2px);
+      color: $color-info;
+      font-weight: 500;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  }
+  .heartIcon {
+    display: none;
+  }
+  .icon {
+    @include stylesIcon($color1, $fs-1);
+    &.active {
+      @include stylesIcon($color1, $fs-3);
+    }
+  }
+}

@@ -1,0 +1,108 @@
+@import "../helper/mixin";
+@import "../helper/variable";
+
+.volume {
+  .icon {
+    @include stylesIcon($primary, $fs-1);
+    &.active {
+      @include stylesIcon($color1, $fs-1);
+    }
+  }
+  //css for window mode
+  .windowMode {
+    position: relative;
+    .imgSong {
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      width: 18%;
+      object-fit: cover;
+      z-index: 2;
+      img {
+        width: 100%;
+      }
+      .overlay {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        height: 100%;
+        width: 100%;
+        background-color: rgba($color: #000000, $alpha: 0.7);
+        transition: all 0.3s;
+        display: none;
+      }
+      .closeIcon {
+        position: absolute;
+        top: 5%;
+        right: 3%;
+        transition: all 0.3s;
+        display: none;
+      }
+      .controlBtn {
+        position: absolute;
+        bottom: 12%;
+        right: 14%;
+        transition: all 0.3s;
+        display: none;
+      }
+      &:hover {
+        .overlay,
+        .closeIcon,
+        .controlBtn {
+          display: block;
+        }
+      }
+    }
+  }
+  //css for list song
+  .listSong {
+    position: fixed;
+    right: -100%;
+    top: 0;
+    height: calc(100% - 100px);
+    width: 22%;
+    background-color: $bg-header;
+    z-index: 99;
+    transition: all 1.5s;
+    .title {
+      position: fixed;
+      right: -100%;
+      top: 0;
+      width: 100%;
+      background-color: $bg-header;
+      color: $primary;
+      padding: 16px 24px;
+      font-size: $fs-2;
+      font-weight: 500;
+    }
+    &.appear {
+      right: 0;
+      .title {
+        right: 0;
+      }
+    }
+
+    .playlist {
+      margin-top: 80px;
+      height: calc(100% - 80px);
+      overflow-y: scroll;
+      //custom scrollbar
+      /* width */
+      &::-webkit-scrollbar {
+        width: 5px;
+      }
+
+      /* Track */
+      &::-webkit-scrollbar-track {
+        background: $bg-header;
+        border-radius: 10px;
+      }
+
+      /* Handle */
+      &::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 10px;
+      }
+    }
+  }
+}

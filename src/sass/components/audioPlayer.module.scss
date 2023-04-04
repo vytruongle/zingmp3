@@ -1,0 +1,17 @@
+@import "../helper/mixin";
+@import "../helper/variable";
+
+#audioButton {
+  .btnActive {
+    color: $color1;
+  }
+
+  .repeatIcon {
+    color: #fff;
+    font-size: 24px;
+    .repeatOne {
+      font-size: 26px;
+      margin-top: 5px;
+    }
+  }
+}

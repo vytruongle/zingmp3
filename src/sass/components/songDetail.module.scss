@@ -1,0 +1,103 @@
+@import "../helper/mixin";
+@import "../helper/variable";
+
+.songDetail {
+  @include bgContent($bg-header);
+
+  .image {
+    @include stylesImg("cover");
+    margin-bottom: 16px;
+  }
+
+  .detailInfo {
+    text-align: center;
+    h1 {
+      font-size: $fs-2;
+      color: $primary;
+      font-weight: 500;
+    }
+    p {
+      color: $color-info;
+      font-size: $fs-3;
+      font-weight: 500;
+    }
+
+    .playBtn {
+      background-color: $bg-item;
+      color: $primary;
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .bgActive {
+    &:hover {
+      background-color: rgba($color: #fff, $alpha: 0.1);
+      .imgSong {
+        img {
+          filter: brightness(35%);
+        }
+        .btnControl {
+          display: block;
+        }
+      }
+    }
+    &.active {
+      background-color: rgba($color: #fff, $alpha: 0.1);
+      .imgSong {
+        img {
+          filter: brightness(35%);
+        }
+        .btnControl {
+          display: block;
+        }
+      }
+      .singer {
+        color: $primary;
+      }
+    }
+  }
+
+  .infoSong {
+    display: flex;
+    align-items: center;
+    .imgSong {
+      position: relative;
+
+      img {
+        width: 60px;
+        height: 60px;
+        margin-right: 8px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .btnControl {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-60%, -50%);
+        color: $primary;
+        font-size: $fs-4;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: none;
+      }
+    }
+    h3 {
+      font-size: $fs-3;
+      color: $primary;
+    }
+  }
+  .singer {
+    font-size: $fs-3;
+    color: $color-info;
+  }
+
+  .icon {
+    @include stylesIcon($color1, $fs-1);
+    &.active {
+      @include stylesIcon($color1, $fs-3);
+    }
+  }
+}

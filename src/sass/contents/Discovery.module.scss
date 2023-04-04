@@ -1,0 +1,84 @@
+@import "../helper/mixin";
+@import "../helper/variable";
+
+.item {
+  @include bgContent($bg-header);
+
+  .carousel {
+    cursor: pointer;
+    height: 250px;
+    img {
+      @include stylesImg(top);
+    }
+  }
+
+  .listNewSong {
+    padding-top: 50px;
+    overflow-y: auto;
+    h1 {
+      color: $primary;
+      font-size: $fs-4;
+      margin-bottom: 16px;
+    }
+    .tabsBtn {
+      color: $color1;
+      font-weight: 500;
+      background-color: transparent;
+      border: 1px solid rgba($color: $primary, $alpha: 0.5);
+    }
+    .album {
+      width: 100%;
+      position: relative;
+      padding-bottom: 150px;
+      cursor: pointer;
+      .albumItem {
+        img {
+          @include stylesImg(fill);
+        }
+        .icon {
+          @include stylesIcon($primary, $fs-5);
+        }
+        .iconHeart {
+          @include stylesIcon($primary, $fs-3);
+          &.active {
+            @include stylesIcon($color1, $fs-3);
+          }
+        }
+        .groupBtn {
+          display: flex;
+          align-items: baseline;
+          margin: auto;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-70%, -50%);
+          visibility: hidden;
+        }
+        &:hover {
+          img {
+            filter: brightness(40%);
+            transform: scale(1.1);
+            transition: all 0.3s;
+          }
+          .groupBtn {
+            visibility: visible;
+          }
+        }
+      }
+    }
+  }
+
+  .footer {
+    h1 {
+      color: $primary;
+      font-size: $fs-4;
+      margin-bottom: 16px;
+    }
+    .imgLogo {
+      width: 180px;
+      height: 100px;
+      object-fit: fill;
+      border-radius: 10px;
+    }
+  }
+}

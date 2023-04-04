@@ -1,0 +1,72 @@
+@import "../helper/mixin";
+@import "../helper/variable";
+
+#newSong {
+  height: 100%;
+  padding-bottom: 50px;
+  overflow-x: hidden;
+  .itemSong {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px;
+
+    .itemImg {
+      position: relative;
+      img {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .controlBtn {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -55%);
+        color: $primary;
+        font-size: $fs-4;
+        transition: all 0.1s;
+        visibility: hidden;
+      }
+    }
+
+    .title {
+      color: $primary;
+      padding-left: 16px;
+      line-height: 1;
+      h3 {
+        font-size: $fs-1;
+      }
+      p {
+        font-size: $fs-3;
+        color: rgba($color: $primary, $alpha: 0.4);
+      }
+    }
+    .iconHeart {
+      @include stylesIcon($color1, $fs-1);
+      display: none;
+      &.active {
+        @include stylesIcon($color1, $fs-3);
+      }
+    }
+    &:hover {
+      background-color: rgba($color: $primary, $alpha: 0.1);
+      border-radius: 8px;
+      .iconHeart {
+        display: block;
+      }
+      .itemImg {
+        img {
+          filter: brightness(40%);
+        }
+        .controlBtn {
+          visibility: visible;
+        }
+      }
+    }
+  }
+}

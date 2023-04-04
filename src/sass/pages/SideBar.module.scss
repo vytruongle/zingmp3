@@ -1,0 +1,53 @@
+.sideBar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 80px;
+  width: 15%;
+  height: calc((100% - 100px));
+  background-color: #221a2d;
+
+  .logo {
+    width: 60%;
+    margin: 24px 0;
+    margin-left: 13%;
+    cursor: pointer;
+    img {
+      width: 100%;
+    }
+  }
+
+  .listItem {
+    list-style: none;
+    padding: 0;
+    li {
+      margin: 12px 0;
+      height: 45px;
+      line-height: 45px;
+
+      cursor: pointer;
+      &.active {
+        background-color: rgba($color: #fff, $alpha: 0.15);
+        border-left: 3px solid #9b4de0;
+        a {
+          color: #bf72e9;
+          font-weight: 500;
+        }
+      }
+      a {
+        text-decoration: none;
+        color: #fff;
+        font-weight: 400;
+        padding-left: 13%;
+        display: block;
+        width: 100%;
+      }
+      &:hover {
+        background-color: rgba($color: #fff, $alpha: 0.1);
+        a {
+          color: #bf72e9;
+        }
+      }
+    }
+  }
+}

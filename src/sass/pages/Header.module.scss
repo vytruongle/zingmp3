@@ -1,0 +1,42 @@
+@import "../helper/mixin";
+@import "../helper/variable";
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 15%;
+  width: calc(100% - 15%);
+  height: 60px;
+  background-color: #170f23;
+  z-index: 1;
+
+  .search {
+    background-color: #2f2739;
+    border-radius: 20px;
+    &.focus {
+      background-color: #34224f;
+      input {
+        background-color: #34224f;
+      }
+    }
+    input {
+      background-color: #2f2739;
+      // change blinking input
+      caret-color: #fff;
+      &::placeholder {
+        color: #fff;
+      }
+    }
+  }
+
+  .icon {
+    @include stylesIcon($primary, $fs-1);
+  }
+
+  .avatar {
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    object-fit: cover;
+  }
+}

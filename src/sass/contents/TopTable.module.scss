@@ -1,0 +1,27 @@
+@import "../helper/mixin";
+@import "../helper/variable";
+
+#topTable {
+  @include bgContent($bg-header);
+  .table {
+    width: 100%;
+    margin: auto;
+    padding: 50px 0;
+    position: relative;
+    .bgHeader {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: auto;
+      filter: grayscale(80%) opacity(0.1);
+    }
+    h1 {
+      color: $primary;
+    }
+    h3 {
+      color: $primary;
+      font-size: $fs-1;
+    }
+  }
+}
