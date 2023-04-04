@@ -50,14 +50,13 @@ const ListSongTable = ({ danhSachBaiHat, category }) => {
           <Col span={2}>{selNum(id + 1)}</Col>
           <Col span={10}>
             <div className={clsx(styles.info)}>
-              <div className={clsx(styles.imgSong)}>
-                <img
-                  src={item.img}
-                  alt={item.img}
-                  onClick={() => {
-                    handlePlaySong(item, id);
-                  }}
-                />
+              <div
+                className={clsx(styles.imgSong)}
+                onClick={() => {
+                  handlePlaySong(item, id);
+                }}
+              >
+                <img src={item.img} alt={item.img} />
                 {isPlaying && index === id && category === categorySong ? (
                   <PauseOutlined className={clsx(styles.btnControl)} />
                 ) : (
