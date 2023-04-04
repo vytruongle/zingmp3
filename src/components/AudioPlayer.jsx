@@ -31,7 +31,7 @@ const AudioPlayer = (song) => {
   const audioRef = useRef(new Audio(linkAudio));
   const dispatch = useDispatch();
 
-  const [isPlaying, setPlaying] = useState(null);
+  const [isPlaying, setPlaying] = useState(stateAudio);
   //find index of data
   const index = data.findIndex(
     (item) => item.category === currentSong.category
