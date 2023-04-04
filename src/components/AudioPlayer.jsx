@@ -31,7 +31,6 @@ const AudioPlayer = (song) => {
   const audioRef = useRef(new Audio(linkAudio));
   const dispatch = useDispatch();
 
-  const [isPlaying, setPlaying] = useState(stateAudio);
   //find index of data
   const index = data.findIndex(
     (item) => item.category === currentSong.category
@@ -117,12 +116,12 @@ const AudioPlayer = (song) => {
 
   //handle play/pause song
   useEffect(() => {
-    if (isPlaying || stateAudio) {
+    if (stateAudio) {
       audioRef.current.play();
     } else {
       audioRef.current.pause();
     }
-  }, [isPlaying, stateAudio]);
+  }, [stateAudio]);
 
   //render repeat button
   const renderRepeat = () => {
@@ -150,7 +149,6 @@ const AudioPlayer = (song) => {
     if (isRepeat === 0) {
       if (currentSong.id === newSong.length - 1) {
         dispatch(PAUSE_SONG());
-        setPlaying(false);
       } else {
         dispatch(
           CHOOSE_SONG({
@@ -223,7 +221,6 @@ const AudioPlayer = (song) => {
           <PauseCircleOutlined
             style={{ color: "#fff", fontSize: "32px" }}
             onClick={() => {
-              setPlaying(false);
               dispatch(PAUSE_SONG());
             }}
           />
@@ -232,7 +229,6 @@ const AudioPlayer = (song) => {
             style={{ color: "#fff", fontSize: "32px" }}
             onClick={() => {
               dispatch(PLAY_SONG());
-              setPlaying(true);
             }}
           />
         )}

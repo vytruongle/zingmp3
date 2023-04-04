@@ -21,7 +21,7 @@ const Personal = () => {
   const navigate = useNavigate();
 
   const renderFavorSong = () => {
-    return listSong?.map((item) => {
+    return listSong?.map((item, id) => {
       return (
         <Row
           gutter={16}
@@ -31,6 +31,7 @@ const Personal = () => {
           onDoubleClick={() => {
             handlePlaySong(item);
           }}
+          key={id}
         >
           <Col span={6}>
             <div className="d-flex">
@@ -67,10 +68,11 @@ const Personal = () => {
   };
 
   const renderFavorPlaylist = () => {
-    return playlistSong?.map((item) => {
+    return playlistSong?.map((item, id) => {
       return (
         <div
           className={clsx(styles.playlistInfo)}
+          key={id}
           onClick={() => {
             localStorage.setItem("data", JSON.stringify(item));
             navigate(`/album/album:${item.id}`);

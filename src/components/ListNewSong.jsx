@@ -14,8 +14,11 @@ import { ADD, CHOOSE_SONG, DEL } from "../actions/listSlice";
 import { PAUSE_SONG, PLAY_SONG } from "../actions/audioSlice";
 
 const ListNewSong = ({ item, category }) => {
-  const [isClick, setClick] = useState(false);
   const stateAudio = useSelector((state) => state.audioReducer.isPlaySong);
+  const currentIndex = useSelector((state) => state.listReducer.chooseSong.id);
+  const currentCategory = useSelector(
+    (state) => state.listReducer.chooseSong.category
+  );
   const favorId = useSelector((state) => state.listReducer.favorId);
   const favorList = useSelector((state) => state.listReducer.favorList);
   const [index, setIndex] = useState(null);
@@ -38,18 +41,22 @@ const ListNewSong = ({ item, category }) => {
         category: category,
       })
     );
+    dispatch(PAUSE_SONG());
+    setTimeout(() => {
+      dispatch(PLAY_SONG());
+    }, 200);
   };
 
   useEffect(() => {
-    if (isClick && index !== null) {
+    if (stateAudio) {
       dispatch(PLAY_SONG());
+      setIndex(currentIndex);
     } else {
       dispatch(PAUSE_SONG());
     }
     // eslint-disable-next-line
-  }, [index]);
+  }, [index, stateAudio]);
 
-  console.log(favorId);
   const renderListNewSong = () => {
     return item.map((song, id) => {
       return (
@@ -62,18 +69,13 @@ const ListNewSong = ({ item, category }) => {
                   type="text"
                   className={clsx(styles.controlBtn)}
                   onClick={() => {
-                    setClick(!isClick);
-                    setIndex(() => {
-                      if (stateAudio) {
-                        return null;
-                      } else {
-                        return id;
-                      }
-                    });
+                    setIndex(id);
                     handleChooseSong(category, song, id);
                   }}
                 >
-                  {stateAudio && index === id ? (
+                  {stateAudio &&
+                  index === id &&
+                  category === currentCategory ? (
                     <PauseOutlined />
                   ) : (
                     <CaretRightOutlined />

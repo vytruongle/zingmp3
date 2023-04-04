@@ -47,10 +47,8 @@ const Discovery = () => {
     dispatch(LOAD_DATA({ item, index: 0 }));
     if (stateAudio) {
       dispatch(PAUSE_SONG());
-      console.log(false);
     } else {
       dispatch(PLAY_SONG());
-      console.log(true);
     }
   };
 
