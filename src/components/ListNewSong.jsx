@@ -12,6 +12,7 @@ import styles from "../sass/components/ListNewSong.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { ADD, CHOOSE_SONG, DEL } from "../actions/listSlice";
 import { PAUSE_SONG, PLAY_SONG } from "../actions/audioSlice";
+import { toast } from "react-toastify";
 
 const ListNewSong = ({ item, category }) => {
   const stateAudio = useSelector((state) => state.audioReducer.isPlaySong);
@@ -23,6 +24,7 @@ const ListNewSong = ({ item, category }) => {
   const favorList = useSelector((state) => state.listReducer.favorList);
   const [index, setIndex] = useState(null);
   const dispatch = useDispatch();
+  const notify = (text) => toast(text);
 
   // save list favorite song to local storage
   useEffect(() => {
@@ -31,20 +33,24 @@ const ListNewSong = ({ item, category }) => {
   }, [favorList, favorId]);
 
   const handleChooseSong = (category, song, id) => {
-    dispatch(
-      CHOOSE_SONG({
-        id: id,
-        img: song.img,
-        title: song.title,
-        singer: song.singer,
-        link: song.link,
-        category: category,
-      })
-    );
-    dispatch(PAUSE_SONG());
-    setTimeout(() => {
-      dispatch(PLAY_SONG());
-    }, 200);
+    if (stateAudio && id === index) {
+      dispatch(PAUSE_SONG());
+    } else {
+      dispatch(
+        CHOOSE_SONG({
+          id: id,
+          img: song.img,
+          title: song.title,
+          singer: song.singer,
+          link: song.link,
+          category: category,
+        })
+      );
+      dispatch(PAUSE_SONG());
+      setTimeout(() => {
+        dispatch(PLAY_SONG());
+      }, 200);
+    }
   };
 
   useEffect(() => {
@@ -62,7 +68,7 @@ const ListNewSong = ({ item, category }) => {
       return (
         <Col span={8} key={id}>
           <div className={clsx(styles.itemSong)}>
-            <div className="d-flex align-items-center">
+            <div className="flex items-center">
               <div className={clsx(styles.itemImg)}>
                 <img src={song.img} alt="" />
                 <Button
@@ -82,7 +88,7 @@ const ListNewSong = ({ item, category }) => {
                   )}
                 </Button>
               </div>
-              <div className={clsx(styles.title)}>
+              <div className={clsx(styles.title, "truncate")}>
                 <h3>{song.title}</h3>
                 <p>{song.singer}</p>
               </div>
@@ -94,9 +100,15 @@ const ListNewSong = ({ item, category }) => {
                     shape="circle"
                     type="text"
                     onClick={() => {
+                      notify("Đã xóa khỏi danh sách yêu thích");
                       dispatch(
                         DEL({
-                          id: id,
+                          id: `${id}-${category}`,
+                          img: song.img,
+                          title: song.title,
+                          singer: song.singer,
+                          link: song.link,
+                          index: id,
                           category: category,
                         })
                       );
@@ -113,7 +125,8 @@ const ListNewSong = ({ item, category }) => {
                   <Button
                     shape="circle"
                     type="text"
-                    onClick={() =>
+                    onClick={() => {
+                      notify("Đã thêm vào danh sach yêu thích");
                       dispatch(
                         ADD({
                           id: `${id}-${category}`,
@@ -124,8 +137,8 @@ const ListNewSong = ({ item, category }) => {
                           index: id,
                           category: category,
                         })
-                      )
-                    }
+                      );
+                    }}
                     icon={<HeartOutlined className={clsx(styles.iconHeart)} />}
                   />
                 </Tooltip>

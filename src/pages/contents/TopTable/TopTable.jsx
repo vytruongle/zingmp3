@@ -13,26 +13,25 @@ const TopTable = () => {
   return (
     <div id={clsx(styles.topTable)}>
       <div className={clsx(styles.table)}>
-        <div className="container">
+        <div className="container mx-auto">
           <img className={clsx(styles.bgHeader)} src={bgHeader} alt="" />
-          <div className="container">
-            <h1 className="mb-5">BXH Âm Nhạc</h1>
-            <Tabs
-              tabBarGutter={16}
-              items={data.map((item) => {
-                return {
-                  label: <h3>{item.category}</h3>,
-                  key: `${item.id}`,
-                  children: (
-                    <ListSongTable
-                      danhSachBaiHat={item.danhSachBaiHat}
-                      category={item.category}
-                    />
-                  ),
-                };
-              })}
-            />
-          </div>
+
+          <h1 className="mb-5 text-4xl font-semibold">BXH Âm Nhạc</h1>
+          <Tabs
+            tabBarGutter={16}
+            items={data.map((item) => {
+              return {
+                label: <h3>{item.category}</h3>,
+                key: `${item.id}`,
+                children: (
+                  <ListSongTable
+                    danhSachBaiHat={item.danhSachBaiHat}
+                    category={item.category}
+                  />
+                ),
+              };
+            })}
+          />
         </div>
       </div>
     </div>

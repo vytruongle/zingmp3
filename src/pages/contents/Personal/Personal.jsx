@@ -34,7 +34,7 @@ const Personal = () => {
           key={id}
         >
           <Col span={6}>
-            <div className="d-flex">
+            <div className="flex items-center leading-[2]">
               <div
                 className={clsx(styles.imgSong)}
                 onClick={() => {
@@ -124,7 +124,7 @@ const Personal = () => {
   };
   return (
     <div id={clsx(styles.personal)}>
-      <div className={clsx(styles.container)}>
+      <div className=" container mx-auto px-8">
         <h1>Thư viện</h1>
         <Tabs tabBarGutter={16} defaultActiveKey="1" items={items} />
       </div>

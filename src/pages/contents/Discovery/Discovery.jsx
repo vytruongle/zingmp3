@@ -16,6 +16,7 @@ import {
 } from "../../../actions/listSlice";
 import { PAUSE_SONG, PLAY_SONG } from "../../../actions/audioSlice";
 import ListNewSong from "../../../components/ListNewSong";
+import { toast } from "react-toastify";
 
 // scss
 import styles from "../../../sass/contents/Discovery.module.scss";
@@ -33,6 +34,8 @@ const Discovery = () => {
   const stateAudio = useSelector((state) => state.audioReducer.isPlaySong);
   const favorPlaylist = useSelector((state) => state.listReducer.favorPlaylist);
   const navigate = useNavigate();
+  const notify = (text) => toast(text);
+
   const favorPlaylistId = useSelector(
     (state) => state.listReducer.favorPlaylistId
   );
@@ -64,7 +67,7 @@ const Discovery = () => {
       return (
         <Button
           type="link"
-          className={styles.carousel}
+          className={clsx(styles.carousel)}
           key={item.id}
           onClick={() => {
             navigate(`/album/album:${item.id}`);
@@ -100,12 +103,8 @@ const Discovery = () => {
                     shape="circle"
                     type="text"
                     onClick={() => {
-                      dispatch(
-                        DEL_PLAYLIST({
-                          id: item.id,
-                          category: item.category,
-                        })
-                      );
+                      notify("Đã xóa khỏi danh sách yêu thích");
+                      dispatch(DEL_PLAYLIST(item));
                     }}
                     icon={
                       <HeartFilled
@@ -119,7 +118,10 @@ const Discovery = () => {
                   <Button
                     shape="circle"
                     type="text"
-                    onClick={() => dispatch(ADD_PLAYLIST(item))}
+                    onClick={() => {
+                      notify("Đã thêm vào danh sach yêu thích");
+                      dispatch(ADD_PLAYLIST(item));
+                    }}
                     icon={<HeartOutlined className={clsx(styles.iconHeart)} />}
                   />
                 </Tooltip>
@@ -152,7 +154,7 @@ const Discovery = () => {
 
   return (
     <div className={clsx(styles.item)}>
-      <div className="container">
+      <div className="container mx-auto px-6">
         {/* carousel */}
         <Carousel
           autoplay
@@ -163,7 +165,7 @@ const Discovery = () => {
           {renderImg()}
         </Carousel>
         {/* danh sach nhac */}
-        <div className={clsx(styles.listNewSong, "container")}>
+        <div className={clsx(styles.listNewSong, "px-4")}>
           <h1>Mới phát hành</h1>
           <Tabs
             tabBarGutter={16}
@@ -186,7 +188,7 @@ const Discovery = () => {
           />
         </div>
         {/* album thinh hanh */}
-        <div className={clsx(styles.listNewSong, "container")}>
+        <div className={clsx(styles.listNewSong, "px-4")}>
           <h1>Album thịnh hành</h1>
           <Row
             justify="space-between"
@@ -197,7 +199,7 @@ const Discovery = () => {
           </Row>
         </div>
         {/* footer of page */}
-        <div className={clsx(styles.footer, "container")}>
+        <div className={clsx(styles.footer, "px-4")}>
           <h1>ĐỐI TÁC ÂM NHẠC</h1>
           <Row justify="space-between" align="middle">
             <Col span={4}>

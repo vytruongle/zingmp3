@@ -158,7 +158,7 @@ const data = [
       {
         title: "Shut down",
         singer: "Black pink",
-        img: "https://avatar-ex-swe.nixcdn.com/song/share/2022/09/16/7/a/9/6/1663301882844.jpg",
+        img: "https://avatar-ex-swe.nixcdn.com/song/2022/09/16/0/2/1/c/1663301881856_500.jpg",
         link: ShutDown,
         duration: "02:56",
       },

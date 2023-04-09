@@ -6,7 +6,7 @@
 
   .carousel {
     cursor: pointer;
-    height: 250px;
+    height: 300px;
     img {
       @include stylesImg(top);
     }
@@ -29,7 +29,7 @@
     .album {
       width: 100%;
       position: relative;
-      padding-bottom: 150px;
+      padding-bottom: 80px;
       cursor: pointer;
       .albumItem {
         img {

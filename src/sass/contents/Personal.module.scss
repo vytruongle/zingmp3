@@ -9,78 +9,79 @@
     font-size: $fs-5;
     margin-top: 30px;
   }
-  .container {
-    width: 90%;
-    margin: auto;
-    .rowList {
-      margin-bottom: 16px;
-      .imgSong {
-        position: relative;
-        img {
-          width: 60px;
-          height: 60px;
-          margin-right: 16px;
-          border-radius: 5px;
-          cursor: pointer;
-        }
 
-        .btnControl {
-          position: absolute;
-          left: 50%;
-          top: 50%;
-          transform: translate(-80%, -60%);
-          color: $primary;
-          font-size: $fs-4;
-          cursor: pointer;
-          transition: all 0.2s;
-          display: none;
-        }
+  .rowList {
+    margin-bottom: 16px;
+    .imgSong {
+      position: relative;
+      img {
+        width: 60px;
+        height: 60px;
+        margin-right: 16px;
+        border-radius: 5px;
+        cursor: pointer;
       }
-      .info {
+
+      .btnControl {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-80%, -60%);
         color: $primary;
-        h3 {
-          font-size: $fs-1;
-          line-height: 1;
-        }
+        font-size: $fs-4;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: none;
       }
-
-      &:hover {
-        background-color: rgba($color: #fff, $alpha: 0.1);
-        .imgSong {
-          img {
-            filter: brightness(35%);
-          }
-          .btnControl {
-            display: block;
-          }
-        }
+    }
+    .info {
+      color: $primary;
+      h3 {
+        font-size: $fs-1;
+        line-height: 1;
+      }
+      p {
+        font-size: $fs-3;
+        color: $color-info;
       }
     }
 
-    .playlistInfo {
-      margin-right: 16px;
-      img {
-        width: 200px;
-        border-radius: 10px;
-        cursor: pointer;
-        transition: all 0.3s;
-      }
-      h3 {
-        color: $primary;
-        font-size: $fs-1;
-        padding-top: 16px;
-      }
-      p {
-        color: $color-info;
-        font-size: $fs-3;
-      }
-
-      &:hover {
+    &:hover {
+      background-color: rgba($color: #fff, $alpha: 0.1);
+      .imgSong {
         img {
-          transform: scale(1.1);
           filter: brightness(35%);
-          transition: all 0.3s;
         }
+        .btnControl {
+          display: block;
+        }
+      }
+    }
+  }
+
+  .playlistInfo {
+    margin-right: 16px;
+    img {
+      width: 200px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    h3 {
+      color: $primary;
+      font-size: $fs-1;
+      padding-top: 16px;
+    }
+    p {
+      color: $color-info;
+      font-size: $fs-3;
+    }
+
+    &:hover {
+      img {
+        transform: scale(1.1);
+        filter: brightness(35%);
+        transition: all 0.3s;
       }
     }
   }

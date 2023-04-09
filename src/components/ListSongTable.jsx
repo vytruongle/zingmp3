@@ -36,7 +36,7 @@ const ListSongTable = ({ danhSachBaiHat, category }) => {
         <Row
           gutter={[16, 16]}
           justify="space-between"
-          align={"center"}
+          align="center"
           className={
             index === id && category === categorySong
               ? clsx(styles.tableRow, styles.active)

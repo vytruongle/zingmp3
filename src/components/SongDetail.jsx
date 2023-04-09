@@ -66,14 +66,14 @@ const SongDetail = () => {
           }}
           className={
             id === index
-              ? clsx(styles.bgActive, styles.active)
-              : clsx(styles.bgActive)
+              ? clsx(styles.bgActive, styles.active, " border-b")
+              : clsx(styles.bgActive, " border-b")
           }
         >
-          <th scope="col">
+          <th scope="col" className="px-6 py-4 font-medium whitespace-nowrap">
             <span style={{ color: "#fff" }}>{id + 1}</span>
           </th>
-          <td>
+          <td className="px-6 py-4">
             <div className={clsx(styles.infoSong)}>
               <div
                 className={clsx(styles.imgSong)}
@@ -91,10 +91,10 @@ const SongDetail = () => {
               <h3>{item.title}</h3>
             </div>
           </td>
-          <td>
+          <td className="px-6 py-4 ">
             <p className={clsx(styles.singer)}>{item.singer}</p>
           </td>
-          <td>
+          <td className="px-6 py-4 ">
             <p className={clsx(styles.singer)}>{item.duration}</p>
           </td>
         </tr>
@@ -103,14 +103,18 @@ const SongDetail = () => {
   };
   return (
     <div className={clsx(styles.songDetail)}>
-      <div style={{ width: "90%", margin: "auto" }}>
+      <div className="w-[96%] mx-auto">
         <Row justify={"space-between"} align={"center"}>
-          <Col span={8} style={{ marginTop: "40px" }}>
+          <Col
+            span={8}
+            style={{ marginTop: "40px" }}
+            className="text-center leading-[1.8]"
+          >
             <Image src={data?.img} width={360} className={styles.image} />
             <div className={clsx(styles.detailInfo)}>
               <h1>Những bài {data?.category} hay nhất</h1>
               <p>{like} người yêu thích</p>
-              <div className="d-flex align-items-center justify-content-center">
+              <div className="flex items-center justify-center mt-3">
                 {isPlaying ? (
                   <Button
                     type="text"
@@ -171,13 +175,15 @@ const SongDetail = () => {
             </div>
           </Col>
           <Col span={16}>
-            <table className="table table-hover" style={{ border: "none" }}>
-              <thead>
+            <table className="w-full text-sm text-left">
+              <thead className="text-xs uppercase">
                 <tr style={{ color: "#fff" }}>
-                  <th scope="col">STT</th>
-                  <th>BÀI HÁT</th>
-                  <th>CA SĨ</th>
-                  <th>THỜI GIAN</th>
+                  <th scope="col" className="px-6 py-3">
+                    STT
+                  </th>
+                  <th className="px-6 py-3">BÀI HÁT</th>
+                  <th className="px-6 py-3">CA SĨ</th>
+                  <th className="px-6 py-3">THỜI GIAN</th>
                 </tr>
               </thead>
               <tbody>{renderSongs()}</tbody>

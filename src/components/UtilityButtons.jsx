@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ListSong from "../components/ListSong";
+import ListSong from "./ListSong";
 import clsx from "clsx";
 import { Slider } from "antd";
 import { Button } from "antd";
@@ -15,12 +15,12 @@ import {
 import { BsFillVolumeUpFill, BsVolumeMuteFill } from "react-icons/bs";
 import data from "../data/listSong";
 
-import styles from "../sass/components/Volume.module.scss";
+import styles from "../sass/components/UtilityButtons.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { CHOOSE_SONG } from "../actions/listSlice";
 import { CHANGE_VOLUME, PAUSE_SONG, PLAY_SONG } from "../actions/audioSlice";
 
-const Volume = () => {
+const UtilityButtons = () => {
   const currentSong = useSelector((state) => state.listReducer.chooseSong);
   const currentCategory = useSelector((state) => state.listReducer.category);
   const stateAudio = useSelector((state) => state.audioReducer.isPlaySong);
@@ -188,7 +188,7 @@ const Volume = () => {
     setAppear(!isAppear);
   };
   return (
-    <div className={clsx("d-flex justify-content-center", styles.volume)}>
+    <div className={clsx("flex items-center justify-center", styles.volume)}>
       <div className={clsx("ms-5", styles.windowMode)}>
         <BorderOutlined
           className={clsx(styles.icon)}
@@ -201,7 +201,7 @@ const Volume = () => {
         />
         {isOpen ? renderWindowMode() : null}
       </div>
-      <div className="d-flex align-items-center w-50">
+      <div className="flex items-center w-3/6 mt-1">
         {volume === 0 ? (
           <BsVolumeMuteFill
             style={{
@@ -244,4 +244,4 @@ const Volume = () => {
   );
 };
 
-export default Volume;
+export default UtilityButtons;

@@ -11,15 +11,19 @@ import { Button, Tooltip } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { ADD, DEL, CHOOSE_SONG } from "../actions/listSlice";
 import { PLAY_SONG, PAUSE_SONG } from "../actions/audioSlice";
+import { toast } from "react-toastify";
+
 import styles from "../sass/components/ListSong.module.scss";
+import "react-toastify/dist/ReactToastify.css";
 
 const ListSong = (props) => {
   const favorId = useSelector((state) => state.listReducer.favorId);
   const isPlaying = useSelector((state) => state.audioReducer.isPlaySong);
-  const index = useSelector((state) => state.listReducer.chooseSong.id);
+  const title = useSelector((state) => state.listReducer.chooseSong.title);
   const favorList = useSelector((state) => state.listReducer.favorList);
   const dispatch = useDispatch();
 
+  const notify = (text) => toast(text);
   //save favorite song to local storage
   useEffect(() => {
     localStorage.setItem("favorList", JSON.stringify(favorList));
@@ -48,18 +52,15 @@ const ListSong = (props) => {
             }, 200);
           }}
           className={
-            index === id
-              ? clsx(
-                  "d-flex align-items-center justify-content-between mb-3",
-                  styles.active
-                )
-              : clsx("d-flex align-items-center justify-content-between mb-3")
+            title === song.title
+              ? clsx("flex items-center justify-between mb-3", styles.active)
+              : clsx("flex items-center justify-between mb-3")
           }
         >
-          <div className="d-flex align-items-center">
+          <div className="flex items-center">
             <div className={clsx(styles.songImg)}>
               <img src={song.img} alt="" />
-              {isPlaying && index === id ? (
+              {isPlaying && title === song.title ? (
                 <PauseOutlined
                   className={clsx(styles.playIcon)}
                   onClick={() => {
@@ -88,7 +89,7 @@ const ListSong = (props) => {
                 />
               )}
             </div>
-            <div className={styles.infoSong}>
+            <div className={clsx(styles.infoSong)}>
               <h3>{song.title}</h3>
               <p>{song.singer}</p>
             </div>
@@ -100,6 +101,7 @@ const ListSong = (props) => {
                   shape="circle"
                   type="text"
                   onClick={() => {
+                    notify("Đã xóa khỏi danh sách yêu thích");
                     dispatch(
                       DEL({
                         id: `${id}-${data.category}`,
@@ -107,6 +109,8 @@ const ListSong = (props) => {
                         title: song.title,
                         singer: song.singer,
                         link: song.link,
+                        index: id,
+                        category: data.category,
                       })
                     );
                   }}
@@ -120,7 +124,8 @@ const ListSong = (props) => {
                 <Button
                   shape="circle"
                   type="text"
-                  onClick={() =>
+                  onClick={() => {
+                    notify("Đã thêm vào danh sach yêu thích");
                     dispatch(
                       ADD({
                         id: `${id}-${data.category}`,
@@ -131,8 +136,8 @@ const ListSong = (props) => {
                         index: id,
                         category: data.category,
                       })
-                    )
-                  }
+                    );
+                  }}
                   icon={<HeartOutlined className={clsx(styles.icon)} />}
                 />
               </Tooltip>
@@ -143,7 +148,7 @@ const ListSong = (props) => {
     });
   };
   return (
-    <div className="container">
+    <div className="container mx-auto">
       <div className={clsx(styles.listSong)}>
         <ul>{renderList(props.data)}</ul>
       </div>

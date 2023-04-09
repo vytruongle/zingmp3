@@ -38,8 +38,8 @@ const AudioControl = (props) => {
   };
 
   return (
-    <div className="w-100">
-      <div className="d-flex align-items-center">
+    <div className="w-full">
+      <div className="flex items-center">
         <span style={{ color: "#fff" }}>
           {min < 10 ? `0${min}` : min}: {sec < 10 ? `0${sec}` : sec}
         </span>

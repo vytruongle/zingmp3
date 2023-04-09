@@ -1,14 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
 import data from "../data/listSong";
 
+//data local
 const currentData = JSON.parse(localStorage.getItem("data")) || data[0];
 const currentFavorPlaylist = JSON.parse(localStorage.getItem("favorPlaylist"));
+const currentFavorPlaylistId = JSON.parse(
+  localStorage.getItem("favorPlaylistId")
+);
 const currentFavorList = JSON.parse(localStorage.getItem("favorList"));
 const currentFavorId = JSON.parse(localStorage.getItem("favorId"));
+const currentWordSearch = JSON.parse(localStorage.getItem("word"));
+const currentListSearch = JSON.parse(localStorage.getItem("listSearch"));
+
 const initialState = {
   favorList: currentFavorList || [],
   favorPlaylist: currentFavorPlaylist || [],
-  favorPlaylistId: [],
+  favorPlaylistId: currentFavorPlaylistId || [],
   favorId: currentFavorId || [],
   chooseSong: {
     id: 0,
@@ -24,8 +31,9 @@ const initialState = {
     currentData.danhSachBaiHat[0].link ||
     "/static/media/KhongPhaiDangVuaDau.e81ec2a1bceb4071ee6a.mp3",
   data: data,
+  listSearch: currentListSearch || [],
+  searchWord: currentWordSearch || "",
 };
-
 export const listSlice = createSlice({
   name: "handleList",
   initialState,
@@ -44,16 +52,18 @@ export const listSlice = createSlice({
     },
 
     ADD: (state, action) => {
-      let { favorList, favorId } = state;
-      favorId.push(action.payload.id);
-      favorList.push(action.payload);
+      state.favorId.push(action.payload.id);
+      state.favorList.push(action.payload);
     },
     DEL: (state, action) => {
-      let { favorList, favorId } = state;
-      const index = favorId.indexOf(action.payload.id);
-      const indexList = favorList.indexOf(action.payload);
-      favorId.splice(index, 1);
-      favorList.splice(indexList, 1);
+      const index = state.favorId.findIndex(
+        (item) => item === action.payload.id
+      );
+      const indexList = state.favorList.findIndex(
+        (item) => item.id === action.payload.id
+      );
+      state.favorId.splice(index, 1);
+      state.favorList.splice(indexList, 1);
     },
     ADD_PLAYLIST: (state, action) => {
       let { favorPlaylist, favorPlaylistId } = state;
@@ -63,9 +73,11 @@ export const listSlice = createSlice({
     DEL_PLAYLIST: (state, action) => {
       let { favorPlaylist, favorPlaylistId } = state;
       const index = favorPlaylist.findIndex(
-        (item) => item.id === action.payload.id
+        (item) => item.category === action.payload.category
       );
-      const id = favorPlaylistId.indexOf(action.payload.category);
+      const id = favorPlaylistId.findIndex(
+        (item) => item === action.payload.category
+      );
       favorPlaylist.splice(index, 1);
       favorPlaylistId.splice(id, 1);
     },
@@ -81,10 +93,21 @@ export const listSlice = createSlice({
       state.category = category;
       state.linkAudio = link;
     },
+    SEARCH: (state, action) => {
+      state.searchWord = action.payload.word;
+      state.listSearch = action.payload.listSearch;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { ADD, DEL, CHOOSE_SONG, LOAD_DATA, ADD_PLAYLIST, DEL_PLAYLIST } =
-  listSlice.actions;
+export const {
+  ADD,
+  DEL,
+  CHOOSE_SONG,
+  LOAD_DATA,
+  ADD_PLAYLIST,
+  DEL_PLAYLIST,
+  SEARCH,
+} = listSlice.actions;
 export default listSlice.reducer;

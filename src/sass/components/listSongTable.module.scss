@@ -5,6 +5,7 @@
   .tableRow {
     border-bottom: 1px solid rgba($color: #fff, $alpha: 0.05);
     padding: 8px 0;
+    align-items: center;
     &:hover {
       background-color: rgba($color: #fff, $alpha: 0.1);
       .info {

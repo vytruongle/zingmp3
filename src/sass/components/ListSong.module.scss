@@ -42,6 +42,7 @@
     img {
       object-fit: cover;
       width: 60px;
+      height: 60px;
       border-radius: 5px;
     }
     .playIcon {
@@ -55,7 +56,7 @@
   }
   .infoSong {
     color: $primary;
-    line-height: 0.8;
+    line-height: 1.8;
 
     h3 {
       font-size: $fs-3;
@@ -63,6 +64,7 @@
       overflow: hidden;
       text-overflow: ellipsis;
       width: 180px;
+      font-weight: 500;
     }
     p {
       font-size: calc(($fs-3) - 2px);
