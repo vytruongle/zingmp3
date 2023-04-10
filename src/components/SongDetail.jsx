@@ -17,6 +17,9 @@ import { PAUSE_SONG, PLAY_SONG } from "../actions/audioSlice";
 const SongDetail = () => {
   const data = JSON.parse(localStorage.getItem("data")) || false;
   const isPlaying = useSelector((state) => state.audioReducer.isPlaySong);
+  const category = useSelector(
+    (state) => state.listReducer.chooseSong.category
+  );
   const favorPlaylistId = useSelector(
     (state) => state.listReducer.favorPlaylistId
   );
@@ -35,7 +38,7 @@ const SongDetail = () => {
 
   //  handle Play song
   const handlePlaySong = (item, id) => {
-    if (isPlaying && id === index) {
+    if (isPlaying && id === index && category === data.category) {
       dispatch(PAUSE_SONG());
     } else {
       dispatch(
@@ -65,7 +68,7 @@ const SongDetail = () => {
             handlePlaySong(item, id);
           }}
           className={
-            id === index
+            id === index && category === data.category
               ? clsx(styles.bgActive, styles.active, " border-b")
               : clsx(styles.bgActive, " border-b")
           }
@@ -82,7 +85,7 @@ const SongDetail = () => {
                 }}
               >
                 <img src={item.img} alt="" />
-                {isPlaying && index === id ? (
+                {isPlaying && index === id && category === data.category ? (
                   <PauseOutlined className={clsx(styles.btnControl)} />
                 ) : (
                   <CaretRightOutlined className={clsx(styles.btnControl)} />
@@ -115,7 +118,7 @@ const SongDetail = () => {
               <h1>Những bài {data?.category} hay nhất</h1>
               <p>{like} người yêu thích</p>
               <div className="flex items-center justify-center mt-3">
-                {isPlaying ? (
+                {isPlaying && category === data.category ? (
                   <Button
                     type="text"
                     shape="round"

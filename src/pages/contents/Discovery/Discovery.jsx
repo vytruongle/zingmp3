@@ -41,10 +41,7 @@ const Discovery = () => {
   );
   const [index, setIndex] = useState(null);
   const dispatch = useDispatch();
-  //handle loading data song
-  const handleLoadData = (item) => {
-    dispatch(LOAD_DATA({ item, index: 0 }));
-  };
+
   //handle playing song and load data
   const handlePlaySong = (item) => {
     dispatch(LOAD_DATA({ item, index: 0 }));
@@ -72,7 +69,6 @@ const Discovery = () => {
           onClick={() => {
             navigate(`/album/album:${item.id}`);
             localStorage.setItem("data", JSON.stringify(item));
-            handleLoadData(item);
           }}
         >
           <img src={item.img} alt="" />
@@ -92,7 +88,6 @@ const Discovery = () => {
             onClick={() => {
               navigate(`/album/album:${item.id}`);
               localStorage.setItem("data", JSON.stringify(item));
-              handleLoadData(item);
             }}
           />
           <div className={clsx(styles.groupBtn)}>

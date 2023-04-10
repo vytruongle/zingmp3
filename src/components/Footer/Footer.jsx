@@ -15,7 +15,6 @@ const Footer = () => {
   const song = useSelector((state) => state.listReducer.chooseSong);
   const link = useSelector((state) => state.listReducer.linkAudio);
   const favorId = useSelector((state) => state.listReducer.favorId);
-  console.log(favorId);
   const dispatch = useDispatch();
 
   const notify = (text) => toast(text);
