@@ -12,8 +12,9 @@ import { CHOOSE_SONG } from "../../../actions/listSlice";
 import { useNavigate } from "react-router-dom";
 
 const Personal = () => {
-  const listSong = useSelector((state) => state.listReducer.favorList);
-  const playlistSong = useSelector((state) => state.listReducer.favorPlaylist);
+  const { registerList, indexUser } = useSelector((state) => state.manageUser);
+  const listSong = registerList[indexUser].favorSong;
+  const playlistSong = registerList[indexUser].favorPlayList;
   const isPlaying = useSelector((state) => state.audioReducer.isPlaySong);
   const index = useSelector((state) => state.listReducer.chooseSong.id);
   const titleSong = useSelector((state) => state.listReducer.chooseSong.title);
@@ -96,7 +97,7 @@ const Personal = () => {
       key: "2",
       label: <h3 style={{ color: "#fff", fontSize: "16px" }}>PLAYLIST</h3>,
       children: (
-        <div className="d-flex align-items-center">{renderFavorPlaylist()}</div>
+        <div className="flex items-center">{renderFavorPlaylist()}</div>
       ),
     },
   ];

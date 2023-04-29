@@ -5,18 +5,36 @@ import { Avatar, Button, Tooltip } from "antd";
 import { HeartOutlined, HeartFilled } from "@ant-design/icons";
 import AudioPlayer from "../AudioPlayer";
 import UtilityButtons from "../UtilityButtons";
-import { ADD, DEL } from "../../actions/listSlice";
+import { ADD, DEL } from "../../actions/manageUser";
 import { Slide, ToastContainer, toast } from "react-toastify";
 
 import styles from "../../sass/pages/Footer.module.scss";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 const Footer = () => {
   const song = useSelector((state) => state.listReducer.chooseSong);
   const link = useSelector((state) => state.listReducer.linkAudio);
-  const favorId = useSelector((state) => state.listReducer.favorId);
+  const { accountLogin, registerList, indexUser } = useSelector(
+    (state) => state.manageUser
+  );
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
+  const handleHeartIcon = (id, category) => {
+    if (registerList[indexUser].favorSong.length === 0) {
+      return false;
+    } else {
+      const index = registerList[indexUser]?.favorSong?.findIndex(
+        (item) => item.id === `${id}-${category}`
+      );
+      if (index !== -1) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  };
   const notify = (text) => toast(text);
   return (
     <div className={clsx(styles.footer)}>
@@ -33,33 +51,28 @@ const Footer = () => {
             <p>{song.singer}</p>
           </div>
           <div>
-            {favorId.includes(`${song.id}-${song.category}`) ? (
+            {handleHeartIcon(song.id, song.category) ? (
               <Tooltip title="Xóa khỏi danh sách">
                 <Button
                   shape="circle"
                   type="text"
                   onClick={() => {
-                    notify("Đã xóa khỏi danh sách yêu thích");
-                    dispatch(
-                      DEL({
-                        id: `${song.id}-${song.category}`,
-                        img: song.img,
-                        title: song.title,
-                        singer: song.singer,
-                        link: link,
-                        index: song.id,
-                        category: song.category,
-                      })
-                    );
-                    // console.log({
-                    //   id: `${song.id}-${song.category}`,
-                    //   img: song.img,
-                    //   title: song.title,
-                    //   singer: song.singer,
-                    //   link: link,
-                    //   index: song.id,
-                    //   category: song.category,
-                    // });
+                    if (accountLogin) {
+                      notify("Đã xóa khỏi danh sách yêu thích");
+                      dispatch(
+                        DEL({
+                          id: `${song.id}-${song.category}`,
+                          img: song.img,
+                          title: song.title,
+                          singer: song.singer,
+                          link: link,
+                          index: song.id,
+                          category: song.category,
+                        })
+                      );
+                    } else {
+                      navigate("/login");
+                    }
                   }}
                   icon={
                     <HeartFilled className={clsx(styles.icon, styles.active)} />
@@ -85,18 +98,22 @@ const Footer = () => {
                   shape="circle"
                   type="text"
                   onClick={() => {
-                    notify("Đã thêm vào danh sach yêu thích");
-                    dispatch(
-                      ADD({
-                        id: `${song.id}-${song.category}`,
-                        img: song.img,
-                        title: song.title,
-                        singer: song.singer,
-                        link: link,
-                        index: song.id,
-                        category: song.category,
-                      })
-                    );
+                    if (accountLogin) {
+                      notify("Đã thêm vào danh sach yêu thích");
+                      dispatch(
+                        ADD({
+                          id: `${song.id}-${song.category}`,
+                          img: song.img,
+                          title: song.title,
+                          singer: song.singer,
+                          link: link,
+                          index: song.id,
+                          category: song.category,
+                        })
+                      );
+                    } else {
+                      navigate("/login");
+                    }
                   }}
                   icon={<HeartOutlined className={clsx(styles.icon)} />}
                 />

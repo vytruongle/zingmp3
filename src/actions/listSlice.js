@@ -3,20 +3,10 @@ import data from "../data/listSong";
 
 //data local
 const currentData = JSON.parse(localStorage.getItem("data")) || data[0];
-const currentFavorPlaylist = JSON.parse(localStorage.getItem("favorPlaylist"));
-const currentFavorPlaylistId = JSON.parse(
-  localStorage.getItem("favorPlaylistId")
-);
-const currentFavorList = JSON.parse(localStorage.getItem("favorList"));
-const currentFavorId = JSON.parse(localStorage.getItem("favorId"));
 const currentWordSearch = JSON.parse(localStorage.getItem("word"));
 const currentListSearch = JSON.parse(localStorage.getItem("listSearch"));
 
 const initialState = {
-  favorList: currentFavorList || [],
-  favorPlaylist: currentFavorPlaylist || [],
-  favorPlaylistId: currentFavorPlaylistId || [],
-  favorId: currentFavorId || [],
   chooseSong: {
     id: 0,
     img:
@@ -50,37 +40,6 @@ export const listSlice = createSlice({
       };
       state.linkAudio = item.danhSachBaiHat[index].link;
     },
-
-    ADD: (state, action) => {
-      state.favorId.push(action.payload.id);
-      state.favorList.push(action.payload);
-    },
-    DEL: (state, action) => {
-      const index = state.favorId.findIndex(
-        (item) => item === action.payload.id
-      );
-      const indexList = state.favorList.findIndex(
-        (item) => item.id === action.payload.id
-      );
-      state.favorId.splice(index, 1);
-      state.favorList.splice(indexList, 1);
-    },
-    ADD_PLAYLIST: (state, action) => {
-      let { favorPlaylist, favorPlaylistId } = state;
-      favorPlaylist.push(action.payload);
-      favorPlaylistId.push(action.payload.category);
-    },
-    DEL_PLAYLIST: (state, action) => {
-      let { favorPlaylist, favorPlaylistId } = state;
-      const index = favorPlaylist.findIndex(
-        (item) => item.category === action.payload.category
-      );
-      const id = favorPlaylistId.findIndex(
-        (item) => item === action.payload.category
-      );
-      favorPlaylist.splice(index, 1);
-      favorPlaylistId.splice(id, 1);
-    },
     CHOOSE_SONG: (state, action) => {
       let { id, img, title, singer, link, category } = action.payload;
       state.chooseSong = {
@@ -101,13 +60,5 @@ export const listSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const {
-  ADD,
-  DEL,
-  CHOOSE_SONG,
-  LOAD_DATA,
-  ADD_PLAYLIST,
-  DEL_PLAYLIST,
-  SEARCH,
-} = listSlice.actions;
+export const { CHOOSE_SONG, LOAD_DATA, SEARCH } = listSlice.actions;
 export default listSlice.reducer;

@@ -1,6 +1,6 @@
 import { Row, Col, Image, Button, Tooltip } from "antd";
 import clsx from "clsx";
-import React, { useEffect } from "react";
+import React from "react";
 import {
   CaretRightOutlined,
   HeartOutlined,
@@ -11,8 +11,10 @@ import {
 // scss
 import styles from "../sass/components/songDetail.module.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { CHOOSE_SONG, ADD_PLAYLIST, DEL_PLAYLIST } from "../actions/listSlice";
+import { CHOOSE_SONG } from "../actions/listSlice";
+import { ADD_PLAYLIST, DEL_PLAYLIST } from "../actions/manageUser";
 import { PAUSE_SONG, PLAY_SONG } from "../actions/audioSlice";
+import { useNavigate } from "react-router-dom";
 
 const SongDetail = () => {
   const data = JSON.parse(localStorage.getItem("data")) || false;
@@ -20,21 +22,15 @@ const SongDetail = () => {
   const category = useSelector(
     (state) => state.listReducer.chooseSong.category
   );
-  const favorPlaylistId = useSelector(
-    (state) => state.listReducer.favorPlaylistId
+  const { accountLogin, registerList, indexUser } = useSelector(
+    (state) => state.manageUser
   );
-  const favorPlaylist = useSelector((state) => state.listReducer.favorPlaylist);
   const index = useSelector((state) => state.listReducer.chooseSong.id);
   const dispatch = useDispatch();
 
   //create random like for album
   const like = (Math.floor(Math.random() * 10) + 1) * 1000;
-
-  //save favorite list to local storage
-  useEffect(() => {
-    localStorage.setItem("favorPlaylist", JSON.stringify(favorPlaylist));
-    localStorage.setItem("favorPlaylistId", JSON.stringify(favorPlaylistId));
-  }, [favorPlaylist, favorPlaylistId]);
+  const navigate = useNavigate();
 
   //  handle Play song
   const handlePlaySong = (item, id) => {
@@ -55,6 +51,21 @@ const SongDetail = () => {
       setTimeout(() => {
         dispatch(PLAY_SONG());
       }, 200);
+    }
+  };
+
+  const handleHeartIcon = (category) => {
+    if (registerList[indexUser].favorPlayList.length === 0) {
+      return false;
+    } else {
+      const index = registerList[indexUser]?.favorPlayList?.findIndex(
+        (item) => item.category === category
+      );
+      if (index !== -1) {
+        return true;
+      } else {
+        return false;
+      }
     }
   };
 
@@ -144,18 +155,22 @@ const SongDetail = () => {
                   </Button>
                 )}
                 {/* Heart icon to insert.remove favorite song */}
-                {favorPlaylistId.includes(data.category) ? (
+                {handleHeartIcon(data.category) ? (
                   <Tooltip title="Xóa khỏi danh sách">
                     <Button
                       shape="circle"
                       type="text"
                       onClick={() => {
-                        dispatch(
-                          DEL_PLAYLIST({
-                            id: data.id,
-                            category: data.category,
-                          })
-                        );
+                        if (accountLogin) {
+                          dispatch(
+                            DEL_PLAYLIST({
+                              id: data.id,
+                              category: data.category,
+                            })
+                          );
+                        } else {
+                          navigate("/login");
+                        }
                       }}
                       icon={
                         <HeartFilled
@@ -169,7 +184,13 @@ const SongDetail = () => {
                     <Button
                       shape="circle"
                       type="text"
-                      onClick={() => dispatch(ADD_PLAYLIST(data))}
+                      onClick={() => {
+                        if (accountLogin) {
+                          dispatch(ADD_PLAYLIST(data));
+                        } else {
+                          navigate("/login");
+                        }
+                      }}
                       icon={<HeartOutlined className={clsx(styles.icon)} />}
                     />
                   </Tooltip>

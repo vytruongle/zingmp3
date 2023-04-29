@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import clsx from "clsx";
 import {
   HeartOutlined,
@@ -9,26 +9,41 @@ import {
 import { Button, Tooltip } from "antd";
 //redux
 import { useDispatch, useSelector } from "react-redux";
-import { ADD, DEL, CHOOSE_SONG } from "../actions/listSlice";
+import { CHOOSE_SONG } from "../actions/listSlice";
+import { ADD, DEL } from "../actions/manageUser";
 import { PLAY_SONG, PAUSE_SONG } from "../actions/audioSlice";
 import { toast } from "react-toastify";
 
 import styles from "../sass/components/ListSong.module.scss";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 const ListSong = (props) => {
-  const favorId = useSelector((state) => state.listReducer.favorId);
+  const { accountLogin, registerList, indexUser } = useSelector(
+    (state) => state.manageUser
+  );
+  const navigate = useNavigate();
   const isPlaying = useSelector((state) => state.audioReducer.isPlaySong);
   const title = useSelector((state) => state.listReducer.chooseSong.title);
-  const favorList = useSelector((state) => state.listReducer.favorList);
+
   const dispatch = useDispatch();
 
   const notify = (text) => toast(text);
-  //save favorite song to local storage
-  useEffect(() => {
-    localStorage.setItem("favorList", JSON.stringify(favorList));
-    localStorage.setItem("favorId", JSON.stringify(favorId));
-  }, [favorList, favorId]);
+
+  const handleHeartIcon = (id, category) => {
+    if (registerList[indexUser].favorSong.length === 0) {
+      return false;
+    } else {
+      const index = registerList[indexUser]?.favorSong?.findIndex(
+        (item) => item.id === `${id}-${category}`
+      );
+      if (index !== -1) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  };
 
   const renderList = (data) => {
     return data.danhSachBaiHat.map((song, id) => {
@@ -95,24 +110,27 @@ const ListSong = (props) => {
             </div>
           </div>
           <div className={clsx(styles.heartIcon)}>
-            {favorId.includes(`${id}-${data.category}`) ? (
+            {handleHeartIcon(id, data.category) ? (
               <Tooltip title="Xóa khỏi danh sách">
                 <Button
                   shape="circle"
                   type="text"
                   onClick={() => {
-                    notify("Đã xóa khỏi danh sách yêu thích");
-                    dispatch(
-                      DEL({
-                        id: `${id}-${data.category}`,
-                        img: song.img,
-                        title: song.title,
-                        singer: song.singer,
-                        link: song.link,
-                        index: id,
-                        category: data.category,
-                      })
-                    );
+                    if (accountLogin) {
+                      notify("Đã xóa khỏi danh sách yêu thích");
+                      dispatch(
+                        DEL({
+                          id: `${id}-${data.category}`,
+                          img: song.img,
+                          title: song.title,
+                          singer: song.singer,
+                          link: song.link,
+                          category: data.category,
+                        })
+                      );
+                    } else {
+                      navigate("/login");
+                    }
                   }}
                   icon={
                     <HeartFilled className={clsx(styles.icon, styles.active)} />
@@ -125,18 +143,21 @@ const ListSong = (props) => {
                   shape="circle"
                   type="text"
                   onClick={() => {
-                    notify("Đã thêm vào danh sach yêu thích");
-                    dispatch(
-                      ADD({
-                        id: `${id}-${data.category}`,
-                        img: song.img,
-                        title: song.title,
-                        singer: song.singer,
-                        link: song.link,
-                        index: id,
-                        category: data.category,
-                      })
-                    );
+                    if (accountLogin) {
+                      notify("Đã thêm vào danh sach yêu thích");
+                      dispatch(
+                        ADD({
+                          id: `${id}-${data.category}`,
+                          img: song.img,
+                          title: song.title,
+                          singer: song.singer,
+                          link: song.link,
+                          category: data.category,
+                        })
+                      );
+                    } else {
+                      navigate("/login");
+                    }
                   }}
                   icon={<HeartOutlined className={clsx(styles.icon)} />}
                 />

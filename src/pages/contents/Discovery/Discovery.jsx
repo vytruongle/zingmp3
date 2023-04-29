@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Carousel, Button, Tabs, Row, Col, Tooltip, Image } from "antd";
 import { useNavigate } from "react-router-dom";
 import clsx from "clsx";
@@ -9,11 +9,8 @@ import {
   HeartOutlined,
 } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  LOAD_DATA,
-  ADD_PLAYLIST,
-  DEL_PLAYLIST,
-} from "../../../actions/listSlice";
+import { LOAD_DATA } from "../../../actions/listSlice";
+import { ADD_PLAYLIST, DEL_PLAYLIST } from "../../../actions/manageUser";
 import { PAUSE_SONG, PLAY_SONG } from "../../../actions/audioSlice";
 import ListNewSong from "../../../components/ListNewSong";
 import { toast } from "react-toastify";
@@ -32,13 +29,11 @@ import monstercat from "../../../data/image/monstercat.webp";
 const Discovery = () => {
   const data = useSelector((state) => state.listReducer.data);
   const stateAudio = useSelector((state) => state.audioReducer.isPlaySong);
-  const favorPlaylist = useSelector((state) => state.listReducer.favorPlaylist);
+  const { accountLogin, registerList, indexUser } = useSelector(
+    (state) => state.manageUser
+  );
   const navigate = useNavigate();
   const notify = (text) => toast(text);
-
-  const favorPlaylistId = useSelector(
-    (state) => state.listReducer.favorPlaylistId
-  );
   const [index, setIndex] = useState(null);
   const dispatch = useDispatch();
 
@@ -52,11 +47,20 @@ const Discovery = () => {
     }
   };
 
-  //save favorite playlist to local storage
-  useEffect(() => {
-    localStorage.setItem("favorPlaylist", JSON.stringify(favorPlaylist));
-    localStorage.setItem("favorPlaylistId", JSON.stringify(favorPlaylistId));
-  }, [favorPlaylist, favorPlaylistId]);
+  const handleHeartIcon = (category) => {
+    if (registerList[indexUser].favorPlayList.length === 0) {
+      return false;
+    } else {
+      const index = registerList[indexUser]?.favorPlayList?.findIndex(
+        (item) => item.category === category
+      );
+      if (index !== -1) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  };
 
   // render danh sach nhac
   const renderImg = () => {
@@ -92,14 +96,18 @@ const Discovery = () => {
           />
           <div className={clsx(styles.groupBtn)}>
             <div>
-              {favorPlaylistId.includes(item.category) ? (
+              {handleHeartIcon(item.category) ? (
                 <Tooltip title="Xóa khỏi danh sách">
                   <Button
                     shape="circle"
                     type="text"
                     onClick={() => {
-                      notify("Đã xóa khỏi danh sách yêu thích");
-                      dispatch(DEL_PLAYLIST(item));
+                      if (accountLogin) {
+                        notify("Đã xóa khỏi danh sách yêu thích");
+                        dispatch(DEL_PLAYLIST(item));
+                      } else {
+                        navigate("/login");
+                      }
                     }}
                     icon={
                       <HeartFilled
@@ -114,8 +122,12 @@ const Discovery = () => {
                     shape="circle"
                     type="text"
                     onClick={() => {
-                      notify("Đã thêm vào danh sach yêu thích");
-                      dispatch(ADD_PLAYLIST(item));
+                      if (accountLogin) {
+                        notify("Đã thêm vào danh sach yêu thích");
+                        dispatch(ADD_PLAYLIST(item));
+                      } else {
+                        navigate("/login");
+                      }
                     }}
                     icon={<HeartOutlined className={clsx(styles.iconHeart)} />}
                   />

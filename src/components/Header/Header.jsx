@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import clsx from "clsx";
-import { SearchOutlined, SettingOutlined } from "@ant-design/icons";
+import {
+  SearchOutlined,
+  SettingOutlined,
+  LogoutOutlined,
+} from "@ant-design/icons";
 import { Input, Avatar } from "antd";
 
 import styles from "../../sass/pages/Header.module.scss";
@@ -9,6 +13,7 @@ import avatar from "../../data/image/hansohee.jpg";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { SEARCH } from "../../actions/listSlice";
+import { logoutForm } from "../../actions/manageUser";
 
 const Header = () => {
   const [isFocus, setFocus] = useState(false);
@@ -19,6 +24,7 @@ const Header = () => {
   const handleFocusInput = () => {
     setFocus(!isFocus);
   };
+  const user = JSON.parse(localStorage.getItem("account"));
 
   function toLowerCaseNonAccentVietnamese(str) {
     str = str.toLowerCase();
@@ -95,13 +101,37 @@ const Header = () => {
             }
           />
         </div>
-        <div className="flex items-center justify-end">
+        <div className="flex items-center justify-end gap-2">
           <div className={clsx("me-3", styles.icon)}>
             <SettingOutlined />
           </div>
-          <div style={{ margin: "12px 0" }}>
-            <Avatar src={<img src={avatar} alt="avatar" />} size={35} />
-          </div>
+          {user ? (
+            <div className="flex items-center gap-2">
+              <div style={{ margin: "12px 0" }}>
+                <Avatar src={<img src={avatar} alt="avatar" />} size={35} />
+              </div>
+              <p
+                onClick={() => {
+                  dispatch(logoutForm());
+                  navigate("/");
+                }}
+                className="flex items-center gap-1 flex-wrap text-white text-lg font-semibold cursor-pointer hover:text-red-500"
+              >
+                | Đăng xuất
+                <LogoutOutlined />
+              </p>
+            </div>
+          ) : (
+            <button
+              type="button"
+              onClick={() => {
+                navigate("/login");
+              }}
+              className="mt-3 focus:outline-none text-white bg-[#9b4de0] hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
+            >
+              Đăng nhập
+            </button>
+          )}
         </div>
       </div>
     </div>
