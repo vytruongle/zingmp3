@@ -48,7 +48,7 @@ const Discovery = () => {
   };
 
   const handleHeartIcon = (category) => {
-    if (registerList[indexUser].favorPlayList.length === 0) {
+    if (registerList?.length === 0) {
       return false;
     } else {
       const index = registerList[indexUser]?.favorPlayList?.findIndex(

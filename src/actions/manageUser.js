@@ -7,7 +7,7 @@ const localIndexUser = JSON.parse(localStorage.getItem("indexUser"));
 const initialState = {
   registerList: localRegister || [],
   accountLogin: localAccount || undefined,
-  indexUser: localIndexUser,
+  indexUser: localIndexUser || 0,
 };
 
 const manageUser = createSlice({
