@@ -62,7 +62,7 @@ const ListNewSong = ({ item, category }) => {
   }, [index, stateAudio]);
 
   const handleHeartIcon = (id) => {
-    if (registerList[indexUser].favorSong.length === 0) {
+    if (registerList.length === 0) {
       return false;
     } else {
       const index = registerList[indexUser]?.favorSong?.findIndex(
