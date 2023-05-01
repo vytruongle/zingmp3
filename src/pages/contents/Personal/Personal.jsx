@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 //scss
 import styles from "../../../sass/contents/Personal.module.scss";
@@ -13,13 +13,19 @@ import { useNavigate } from "react-router-dom";
 
 const Personal = () => {
   const { registerList, indexUser } = useSelector((state) => state.manageUser);
-  const listSong = registerList[indexUser].favorSong;
+  const [listSong, setList] = useState([]);
   const playlistSong = registerList[indexUser].favorPlayList;
   const isPlaying = useSelector((state) => state.audioReducer.isPlaySong);
   const index = useSelector((state) => state.listReducer.chooseSong.id);
   const titleSong = useSelector((state) => state.listReducer.chooseSong.title);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (registerList.length > 0) {
+      setList(registerList[indexUser].favorPlayList);
+    }
+  }, [registerList, indexUser]);
 
   const renderFavorSong = () => {
     return listSong?.map((item, id) => {
