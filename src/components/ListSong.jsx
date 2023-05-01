@@ -31,7 +31,7 @@ const ListSong = (props) => {
   const notify = (text) => toast(text);
 
   const handleHeartIcon = (id, category) => {
-    if (registerList[indexUser].favorSong.length === 0) {
+    if (registerList.length === 0) {
       return false;
     } else {
       const index = registerList[indexUser]?.favorSong?.findIndex(
