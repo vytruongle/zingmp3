@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 const Personal = () => {
   const { registerList, indexUser } = useSelector((state) => state.manageUser);
   const [listSong, setList] = useState([]);
-  const playlistSong = registerList[indexUser].favorPlayList;
+  const [playlistSong, setPlaylist] = useState([]);
   const isPlaying = useSelector((state) => state.audioReducer.isPlaySong);
   const index = useSelector((state) => state.listReducer.chooseSong.id);
   const titleSong = useSelector((state) => state.listReducer.chooseSong.title);
@@ -24,6 +24,7 @@ const Personal = () => {
   useEffect(() => {
     if (registerList.length > 0) {
       setList(registerList[indexUser].favorPlayList);
+      setPlaylist(registerList[indexUser].favorPlayList);
     }
   }, [registerList, indexUser]);
 
