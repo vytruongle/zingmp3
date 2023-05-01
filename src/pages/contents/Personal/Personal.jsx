@@ -23,7 +23,7 @@ const Personal = () => {
 
   useEffect(() => {
     if (registerList.length > 0) {
-      setList(registerList[indexUser].favorPlayList);
+      setList(registerList[indexUser].favorPlaySong);
       setPlaylist(registerList[indexUser].favorPlayList);
     }
   }, [registerList, indexUser]);
