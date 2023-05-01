@@ -10,6 +10,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { PAUSE_SONG, PLAY_SONG } from "../../../actions/audioSlice";
 import { CHOOSE_SONG } from "../../../actions/listSlice";
 import { useNavigate } from "react-router-dom";
+import {
+  ADD,
+  ADD_PLAYLIST,
+  DEL,
+  DEL_PLAYLIST,
+} from "../../../actions/manageUser";
 
 const Personal = () => {
   const { registerList, indexUser } = useSelector((state) => state.manageUser);
@@ -26,7 +32,7 @@ const Personal = () => {
       setList(registerList[indexUser].favorPlaySong);
       setPlaylist(registerList[indexUser].favorPlayList);
     }
-  }, [registerList, indexUser]);
+  }, [registerList, indexUser, ADD, ADD_PLAYLIST, DEL, DEL_PLAYLIST]);
 
   const renderFavorSong = () => {
     return listSong?.map((item, id) => {
