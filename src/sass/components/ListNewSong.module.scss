@@ -51,7 +51,7 @@
     }
     .iconHeart {
       @include stylesIcon($color1, $fs-1);
-      // display: none;
+      display: none;
       &.active {
         @include stylesIcon($color1, $fs-3);
       }
