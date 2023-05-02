@@ -37,7 +37,7 @@ const ListSong = (props) => {
       const index = registerList[indexUser]?.favorSong?.findIndex(
         (item) => item.id === `${id}-${category}`
       );
-      if (index !== -1) {
+      if (index > -1) {
         return true;
       } else {
         return false;
@@ -125,6 +125,7 @@ const ListSong = (props) => {
                           title: song.title,
                           singer: song.singer,
                           link: song.link,
+                          duration: song.duration,
                           category: data.category,
                         })
                       );
@@ -152,6 +153,7 @@ const ListSong = (props) => {
                           title: song.title,
                           singer: song.singer,
                           link: song.link,
+                          duration: song.duration,
                           category: data.category,
                         })
                       );

@@ -68,7 +68,7 @@ const ListNewSong = ({ item, category }) => {
       const index = registerList[indexUser]?.favorSong?.findIndex(
         (item) => item.id === `${id}-${category}`
       );
-      if (index !== -1) {
+      if (index > -1) {
         return true;
       } else {
         return false;
@@ -81,7 +81,7 @@ const ListNewSong = ({ item, category }) => {
       return (
         <Col span={8} key={id}>
           <div className={clsx(styles.itemSong)}>
-            <div className="flex items-center">
+            <div className="flex items-center gap-2">
               <div className={clsx(styles.itemImg)}>
                 <img src={song.img} alt="" />
                 <Button
@@ -101,12 +101,12 @@ const ListNewSong = ({ item, category }) => {
                   )}
                 </Button>
               </div>
-              <div className={clsx(styles.title, "truncate")}>
-                <h3>{song.title}</h3>
-                <p>{song.singer}</p>
+              <div className={clsx(styles.title, "truncate basis-2/3")}>
+                <h3 className="truncate">{song.title}</h3>
+                <p className="truncate">{song.singer}</p>
               </div>
             </div>
-            <div>
+            <div className=" absolute right-0 top-1/2 translate-y-[-50%]">
               {handleHeartIcon(id) ? (
                 <Tooltip title="Xóa khỏi danh sách">
                   <Button
@@ -122,6 +122,7 @@ const ListNewSong = ({ item, category }) => {
                             title: song.title,
                             singer: song.singer,
                             link: song.link,
+                            duration: song.duration,
                             category: category,
                           })
                         );
@@ -151,6 +152,7 @@ const ListNewSong = ({ item, category }) => {
                             title: song.title,
                             singer: song.singer,
                             link: song.link,
+                            duration: song.duration,
                             category: category,
                           })
                         );

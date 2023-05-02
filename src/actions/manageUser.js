@@ -7,7 +7,15 @@ const localIndexUser = JSON.parse(localStorage.getItem("indexUser"));
 const initialState = {
   registerList: localRegister || [],
   accountLogin: localAccount || undefined,
-  indexUser: localIndexUser || 0,
+  indexUser: localIndexUser !== undefined ? localIndexUser : undefined,
+  favorPlayList:
+    localIndexUser !== undefined && localIndexUser !== null
+      ? localRegister[localIndexUser].favorPlayList
+      : [],
+  favorSong:
+    localIndexUser !== undefined && localIndexUser !== null
+      ? localRegister[localIndexUser].favorSong
+      : [],
 };
 
 const manageUser = createSlice({
@@ -24,17 +32,21 @@ const manageUser = createSlice({
       state.indexUser = action.payload.index;
       localStorage.setItem("account", JSON.stringify(state.accountLogin));
       localStorage.setItem("indexUser", JSON.stringify(state.indexUser));
-      console.log(state.registerList);
     },
     logoutForm: (state, action) => {
       localStorage.removeItem("account");
+      localStorage.removeItem("indexUser");
       state.accountLogin = [];
+      state.favorSong = [];
+      state.favorPlayList = [];
+      state.indexUser = undefined;
     },
     //handle add/remove favorite songs or favorite playlist
     ADD: (state, action) => {
       state.registerList = JSON.parse(JSON.stringify(state.registerList));
       const favorSong = state.registerList[state.indexUser].favorSong;
       favorSong.push(action.payload);
+      state.favorSong = favorSong;
       localStorage.setItem("register", JSON.stringify(state.registerList));
     },
     DEL: (state, action) => {
@@ -44,12 +56,14 @@ const manageUser = createSlice({
         (item) => item.id === action.payload.id
       );
       favorSong.splice(indexList, 1);
+      state.favorSong = favorSong;
       localStorage.setItem("register", JSON.stringify(state.registerList));
     },
     ADD_PLAYLIST: (state, action) => {
       state.registerList = JSON.parse(JSON.stringify(state.registerList));
       const favorPlayList = state.registerList[state.indexUser]?.favorPlayList;
       favorPlayList.push(action.payload);
+      state.favorPlayList = favorPlayList;
       localStorage.setItem("register", JSON.stringify(state.registerList));
     },
     DEL_PLAYLIST: (state, action) => {
@@ -59,6 +73,7 @@ const manageUser = createSlice({
         (item) => item.category === action.payload.category
       );
       favorPlayList.splice(index, 1);
+      state.favorPlayList = favorPlayList;
       localStorage.setItem("register", JSON.stringify(state.registerList));
     },
   },

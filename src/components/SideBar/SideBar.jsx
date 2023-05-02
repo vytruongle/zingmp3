@@ -12,9 +12,9 @@ const SideBar = () => {
   return (
     <div>
       <nav className={clsx(styles.sideBar)}>
-        <div className={clsx(styles.logo)}>
+        <a href="/" className={clsx(styles.logo, "block")}>
           <img src={logo} alt="Zing mp3 logo" />
-        </div>
+        </a>
         <ul className={clsx(styles.listItem)}>
           <li className={location === "/" ? clsx(styles.active) : null}>
             <Link to="/">

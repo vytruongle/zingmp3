@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 //scss
 import styles from "../../../sass/contents/Personal.module.scss";
@@ -12,21 +12,23 @@ import { CHOOSE_SONG } from "../../../actions/listSlice";
 import { useNavigate } from "react-router-dom";
 
 const Personal = () => {
-  const { registerList, indexUser } = useSelector((state) => state.manageUser);
-  const listSong = registerList[indexUser].favorPlaySong || [];
-  const playlistSong = registerList[indexUser].favorPlayList || [];
+  const { registerList, indexUser, favorPlayList, favorSong } = useSelector(
+    (state) => state.manageUser
+  );
+  const [listSong, setList] = useState([]);
+  const [playlistSong, setPlaylist] = useState([]);
   const isPlaying = useSelector((state) => state.audioReducer.isPlaySong);
   const index = useSelector((state) => state.listReducer.chooseSong.id);
   const titleSong = useSelector((state) => state.listReducer.chooseSong.title);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (registerList.length > 0) {
-  //     setList();
-  //     setPlaylist();
-  //   }
-  // }, [registerList, indexUser, ADD, ADD_PLAYLIST, DEL, DEL_PLAYLIST]);
+  useEffect(() => {
+    if (registerList.length > 0) {
+      setList(favorSong);
+      setPlaylist(favorPlayList);
+    }
+  }, [favorPlayList, favorSong, registerList, indexUser]);
 
   const renderFavorSong = () => {
     return listSong?.map((item, id) => {
@@ -42,7 +44,7 @@ const Personal = () => {
           key={id}
         >
           <Col span={6}>
-            <div className="flex items-center leading-[2]">
+            <div className="flex items-center leading-[2] gap-1">
               <div
                 className={clsx(styles.imgSong)}
                 onClick={() => {
@@ -68,7 +70,7 @@ const Personal = () => {
             <p style={{ color: "#7b7584" }}>{item.title}(Single)</p>
           </Col>
           <Col span={6} className="text-end">
-            <p style={{ color: "#7b7584" }}>03:39</p>
+            <p style={{ color: "#7b7584" }}>{item.duration}</p>
           </Col>
         </Row>
       );

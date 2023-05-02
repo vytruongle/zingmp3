@@ -54,7 +54,7 @@ const Discovery = () => {
       const index = registerList[indexUser]?.favorPlayList?.findIndex(
         (item) => item.category === category
       );
-      if (index !== -1) {
+      if (index > -1) {
         return true;
       } else {
         return false;

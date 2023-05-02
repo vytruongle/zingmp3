@@ -5,16 +5,18 @@
   height: 100%;
   padding-bottom: 50px;
   overflow-x: hidden;
+
   .itemSong {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 8px;
-
+    position: relative;
     .itemImg {
       position: relative;
       img {
         width: 60px;
+        max-width: 60px;
         height: 60px;
         object-fit: cover;
         border-radius: 5px;
@@ -36,10 +38,11 @@
 
     .title {
       color: $primary;
-      padding-left: 16px;
       line-height: 1.8;
+      width: 80%;
       h3 {
-        font-size: $fs-1;
+        font-size: $fs-3;
+        font-weight: 500;
       }
       p {
         font-size: $fs-3;
@@ -48,7 +51,7 @@
     }
     .iconHeart {
       @include stylesIcon($color1, $fs-1);
-      display: none;
+      // display: none;
       &.active {
         @include stylesIcon($color1, $fs-3);
       }

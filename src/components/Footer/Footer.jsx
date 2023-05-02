@@ -28,7 +28,7 @@ const Footer = () => {
       const index = registerList[indexUser]?.favorSong?.findIndex(
         (item) => item.id === `${id}-${category}`
       );
-      if (index !== -1) {
+      if (index > -1) {
         return true;
       } else {
         return false;
