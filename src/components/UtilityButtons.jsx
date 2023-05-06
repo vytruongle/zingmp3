@@ -124,7 +124,12 @@ const UtilityButtons = () => {
           }}
         />
 
-        <div className={clsx(styles.controlBtn)}>
+        <div
+          className={clsx(
+            styles.controlBtn,
+            "xl:translate-x-[-27%] 3xl:translate-x-[-20%]"
+          )}
+        >
           <Button
             type="text"
             style={{ color: "#fff", fontSize: "24px" }}

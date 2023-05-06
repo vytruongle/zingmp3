@@ -10,7 +10,6 @@
   }
   //css for window mode
   .windowMode {
-    position: relative;
     .imgSong {
       position: fixed;
       bottom: 0;
@@ -41,9 +40,10 @@
       .controlBtn {
         position: absolute;
         bottom: 12%;
-        right: 14%;
+        left: 50%;
+        width: 100%;
         transition: all 0.3s;
-        display: none;
+        // display: none;
       }
       &:hover {
         .overlay,

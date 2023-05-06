@@ -11,7 +11,7 @@ const TopTable = () => {
   const data = useSelector((state) => state.listReducer.data);
 
   return (
-    <div id={clsx(styles.topTable)} className="container mx-auto px-8">
+    <div id={clsx(styles.topTable)}>
       <div className={clsx(styles.table)}>
         <div className="container mx-auto">
           <img className={clsx(styles.bgHeader)} src={bgHeader} alt="" />
