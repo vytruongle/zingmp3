@@ -37,10 +37,6 @@ const Discovery = () => {
   const [index, setIndex] = useState(null);
   const dispatch = useDispatch();
 
-  if (window.location.href.substr(-2) !== "?r") {
-    window.location = window.location.href + "?r";
-  }
-
   //handle playing song and load data
   const handlePlaySong = (item) => {
     dispatch(LOAD_DATA({ item, index: 0 }));
