@@ -121,6 +121,7 @@ const ListSong = (props) => {
                       dispatch(
                         DEL({
                           id: `${id}-${data.category}`,
+                          index: id,
                           img: song.img,
                           title: song.title,
                           singer: song.singer,
@@ -149,6 +150,7 @@ const ListSong = (props) => {
                       dispatch(
                         ADD({
                           id: `${id}-${data.category}`,
+                          index: id,
                           img: song.img,
                           title: song.title,
                           singer: song.singer,

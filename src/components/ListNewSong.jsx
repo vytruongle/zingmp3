@@ -22,7 +22,7 @@ const ListNewSong = ({ item, category }) => {
   const currentCategory = useSelector(
     (state) => state.listReducer.chooseSong.category
   );
-  const [index, setIndex] = useState(null);
+  const [index, setIndex] = useState(currentIndex);
   const dispatch = useDispatch();
   const notify = (text) => toast(text);
   const { accountLogin, registerList, indexUser } = useSelector(
@@ -118,6 +118,7 @@ const ListNewSong = ({ item, category }) => {
                         dispatch(
                           DEL({
                             id: `${id}-${category}`,
+                            index: id,
                             img: song.img,
                             title: song.title,
                             singer: song.singer,
@@ -148,6 +149,7 @@ const ListNewSong = ({ item, category }) => {
                         dispatch(
                           ADD({
                             id: `${id}-${category}`,
+                            index: id,
                             img: song.img,
                             title: song.title,
                             singer: song.singer,

@@ -2,23 +2,23 @@ import { createSlice } from "@reduxjs/toolkit";
 import data from "../data/listSong";
 
 //data local
-const currentData = JSON.parse(localStorage.getItem("data")) || data[0];
+const songPlaying = JSON.parse(localStorage.getItem("songPlaying"));
 const currentWordSearch = JSON.parse(localStorage.getItem("word"));
 const currentListSearch = JSON.parse(localStorage.getItem("listSearch"));
 
 const initialState = {
   chooseSong: {
-    id: 0,
+    id: songPlaying?.id || 0,
     img:
-      currentData.danhSachBaiHat[0].img ||
+      songPlaying?.img ||
       "https://avatar-ex-swe.nixcdn.com/song/2018/05/11/6/9/1/0/1526046409297_500.jpg",
-    title: currentData.danhSachBaiHat[0].title || "Không phải dạng vừa đâu",
-    singer: currentData.danhSachBaiHat[0].singer || "Sơn Tùng MTP",
-    category: currentData.category || "Nhac Viet",
+    title: songPlaying?.title || "Không phải dạng vừa đâu",
+    singer: songPlaying?.singer || "Sơn Tùng MTP",
+    category: songPlaying?.category || "Nhac Viet",
   },
-  category: currentData.category || "Nhac Viet",
+  category: songPlaying?.category || "Nhac Viet",
   linkAudio:
-    currentData.danhSachBaiHat[0].link ||
+    songPlaying?.linkAudio ||
     "/static/media/KhongPhaiDangVuaDau.e81ec2a1bceb4071ee6a.mp3",
   data: data,
   listSearch: currentListSearch || [],
@@ -48,7 +48,9 @@ export const listSlice = createSlice({
         title: title,
         singer: singer,
         category: category,
+        linkAudio: link,
       };
+      localStorage.setItem("songPlaying", JSON.stringify(state.chooseSong));
       state.category = category;
       state.linkAudio = link;
     },

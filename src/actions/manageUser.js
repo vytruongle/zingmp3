@@ -36,6 +36,7 @@ const manageUser = createSlice({
     logoutForm: (state, action) => {
       localStorage.removeItem("account");
       localStorage.removeItem("indexUser");
+      localStorage.removeItem("songPlaying");
       state.accountLogin = undefined;
       state.favorSong = [];
       state.favorPlayList = [];

@@ -19,6 +19,9 @@ const Personal = () => {
   const [playlistSong, setPlaylist] = useState([]);
   const isPlaying = useSelector((state) => state.audioReducer.isPlaySong);
   const index = useSelector((state) => state.listReducer.chooseSong.id);
+  const category = useSelector(
+    (state) => state.listReducer.chooseSong.category
+  );
   const titleSong = useSelector((state) => state.listReducer.chooseSong.title);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -113,7 +116,7 @@ const Personal = () => {
 
   //  handle Play song
   const handlePlaySong = (item) => {
-    if (isPlaying && item.index === index) {
+    if (isPlaying && item.index === index && item.category === category) {
       dispatch(PAUSE_SONG());
     } else {
       dispatch(

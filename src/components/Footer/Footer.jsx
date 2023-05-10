@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import clsx from "clsx";
 import { Avatar, Button, Tooltip } from "antd";
@@ -15,26 +15,28 @@ import { useNavigate } from "react-router-dom";
 const Footer = () => {
   const song = useSelector((state) => state.listReducer.chooseSong);
   const link = useSelector((state) => state.listReducer.linkAudio);
+  const [heartDisplay, setHeartDisplay] = useState(false);
   const { accountLogin, registerList, indexUser } = useSelector(
     (state) => state.manageUser
   );
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleHeartIcon = (id, category) => {
+  useEffect(() => {
     if (registerList.length === 0) {
-      return false;
+      setHeartDisplay(false);
     } else {
       const index = registerList[indexUser]?.favorSong?.findIndex(
-        (item) => item.id === `${id}-${category}`
+        (item) => item.id === `${song.id}-${song.category}`
       );
       if (index > -1) {
-        return true;
+        setHeartDisplay(true);
       } else {
-        return false;
+        setHeartDisplay(false);
       }
     }
-  };
+  }, [song, indexUser, registerList]);
+
   const notify = (text) => toast(text);
   return (
     <div className={clsx(styles.footer)}>
@@ -51,7 +53,7 @@ const Footer = () => {
             <p>{song.singer}</p>
           </div>
           <div>
-            {handleHeartIcon(song.id, song.category) ? (
+            {heartDisplay ? (
               <Tooltip title="Xóa khỏi danh sách">
                 <Button
                   shape="circle"
