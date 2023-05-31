@@ -11,7 +11,7 @@ import {
 import styles from "../sass/components/ListNewSong.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { CHOOSE_SONG } from "../actions/listSlice";
-import { ADD, DEL } from "../actions/manageUser";
+import { ADD, DEL, IS_CHOOSE } from "../actions/manageUser";
 import { PAUSE_SONG, PLAY_SONG } from "../actions/audioSlice";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -90,6 +90,7 @@ const ListNewSong = ({ item, category }) => {
                   onClick={() => {
                     setIndex(id);
                     handleChooseSong(category, song, id);
+                    dispatch(IS_CHOOSE(false));
                   }}
                 >
                   {stateAudio &&

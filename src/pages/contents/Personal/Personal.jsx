@@ -3,13 +3,19 @@ import React, { useEffect, useState } from "react";
 //scss
 import styles from "../../../sass/contents/Personal.module.scss";
 import clsx from "clsx";
-import { Col, Row, Tabs } from "antd";
-import { CaretRightOutlined, PauseOutlined } from "@ant-design/icons";
+import { Button, Col, Row, Tabs, Tooltip } from "antd";
+import {
+  CaretRightOutlined,
+  PauseOutlined,
+  HeartFilled,
+} from "@ant-design/icons";
 
 import { useDispatch, useSelector } from "react-redux";
 import { PAUSE_SONG, PLAY_SONG } from "../../../actions/audioSlice";
 import { CHOOSE_SONG } from "../../../actions/listSlice";
 import { useNavigate } from "react-router-dom";
+import { DEL, IS_CHOOSE } from "../../../actions/manageUser";
+import { toast } from "react-toastify";
 
 const Personal = () => {
   const { registerList, indexUser, favorPlayList, favorSong } = useSelector(
@@ -25,6 +31,7 @@ const Personal = () => {
   const titleSong = useSelector((state) => state.listReducer.chooseSong.title);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const notify = (text) => toast(text);
 
   useEffect(() => {
     if (registerList.length > 0) {
@@ -33,8 +40,24 @@ const Personal = () => {
     }
   }, [favorPlayList, favorSong, registerList, indexUser]);
 
+  const handleHeartIcon = (title) => {
+    if (registerList.length === 0) {
+      return false;
+    } else {
+      const index = registerList[indexUser]?.favorSong?.findIndex(
+        (item) => item.title === title
+      );
+      if (index > -1) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  };
+
   const renderFavorSong = () => {
     return listSong?.map((item, id) => {
+      console.log(item.duration);
       return (
         <Row
           gutter={16}
@@ -42,7 +65,8 @@ const Personal = () => {
           align={"center"}
           className={clsx(styles.rowList)}
           onDoubleClick={() => {
-            handlePlaySong(item);
+            handlePlaySong(item, id);
+            dispatch(IS_CHOOSE(true));
           }}
           key={id}
         >
@@ -51,7 +75,8 @@ const Personal = () => {
               <div
                 className={clsx(styles.imgSong)}
                 onClick={() => {
-                  handlePlaySong(item);
+                  handlePlaySong(item, id);
+                  dispatch(IS_CHOOSE(true));
                 }}
               >
                 <img src={item.img} alt={item.img} />
@@ -72,9 +97,36 @@ const Personal = () => {
           <Col span={12} className="text-center">
             <p style={{ color: "#7b7584" }}>{item.title}(Single)</p>
           </Col>
-          <Col span={6} className="text-end">
+          <Col span={6} className="text-center">
             <p style={{ color: "#7b7584" }}>{item.duration}</p>
           </Col>
+          {handleHeartIcon(item.title) ? (
+            <Tooltip title="Xóa khỏi danh sách">
+              <Button
+                shape="circle"
+                type="text"
+                className={clsx(styles.buttonHeart)}
+                onClick={() => {
+                  notify("Đã xóa khỏi danh sách yêu thích");
+                  dispatch(
+                    DEL({
+                      id: item.id,
+                      index: item.index,
+                      img: item.img,
+                      title: item.title,
+                      singer: item.singer,
+                      link: item.link,
+                      duration: item.duration,
+                      category: item.category,
+                    })
+                  );
+                }}
+                icon={
+                  <HeartFilled className={clsx(styles.icon, styles.active)} />
+                }
+              />
+            </Tooltip>
+          ) : null}
         </Row>
       );
     });
@@ -115,13 +167,14 @@ const Personal = () => {
   ];
 
   //  handle Play song
-  const handlePlaySong = (item) => {
+  const handlePlaySong = (item, id) => {
     if (isPlaying && item.index === index && item.category === category) {
       dispatch(PAUSE_SONG());
     } else {
       dispatch(
         CHOOSE_SONG({
-          id: item.index,
+          id: id,
+          index: item.index,
           img: item.img,
           title: item.title,
           singer: item.singer,

@@ -21,11 +21,13 @@
     list-style: none;
     padding: 0;
     li {
-      margin: 12px 0;
+      margin: 20px 0;
       height: 45px;
       line-height: 45px;
 
       cursor: pointer;
+    }
+    .item {
       &.active {
         background-color: rgba($color: #fff, $alpha: 0.15);
         border-left: 3px solid #9b4de0;

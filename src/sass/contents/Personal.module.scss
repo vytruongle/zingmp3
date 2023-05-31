@@ -12,6 +12,8 @@
 
   .rowList {
     margin-bottom: 16px;
+    padding: 8px 0;
+    position: relative;
     .imgSong {
       position: relative;
       img {
@@ -48,6 +50,20 @@
       }
     }
 
+    .buttonHeart {
+      position: absolute;
+      right: 0;
+      top: 30%;
+      transform: translateY(-50%);
+      display: none;
+      .icon {
+        @include stylesIcon($color1, $fs-1);
+        &.active {
+          @include stylesIcon($color1, $fs-3);
+        }
+      }
+    }
+
     &:hover {
       background-color: rgba($color: #fff, $alpha: 0.1);
       .imgSong {
@@ -57,6 +73,9 @@
         .btnControl {
           display: block;
         }
+      }
+      .buttonHeart {
+        display: block;
       }
     }
   }

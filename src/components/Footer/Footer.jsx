@@ -27,7 +27,7 @@ const Footer = () => {
       setHeartDisplay(false);
     } else {
       const index = registerList[indexUser]?.favorSong?.findIndex(
-        (item) => item.id === `${song.id}-${song.category}`
+        (item) => item.title === `${song.title}`
       );
       if (index > -1) {
         setHeartDisplay(true);

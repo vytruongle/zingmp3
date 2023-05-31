@@ -6,9 +6,8 @@
 
   .carousel {
     cursor: pointer;
-    height: 300px;
     img {
-      @include stylesImg(top);
+      @include stylesImg(top, 100%);
     }
   }
 
@@ -33,7 +32,7 @@
       cursor: pointer;
       .albumItem {
         img {
-          @include stylesImg(fill);
+          @include stylesImg(fill, 100%);
         }
         .icon {
           @include stylesIcon($primary, $fs-5);

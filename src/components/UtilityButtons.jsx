@@ -24,6 +24,7 @@ const UtilityButtons = () => {
   const currentSong = useSelector((state) => state.listReducer.chooseSong);
   const currentCategory = useSelector((state) => state.listReducer.category);
   const stateAudio = useSelector((state) => state.audioReducer.isPlaySong);
+  const { favorSong, isChooseList } = useSelector((state) => state.manageUser);
   const dispatch = useDispatch();
   const [isOpen, setOpen] = useState(false);
   const [isAppear, setAppear] = useState(false);
@@ -106,6 +107,8 @@ const UtilityButtons = () => {
     }
   };
 
+  const songData = isChooseList ? favorSong : data[index];
+
   //handle change volume
   const onChangeVolume = (value) => {
     dispatch(CHANGE_VOLUME(value));
@@ -174,7 +177,7 @@ const UtilityButtons = () => {
             ? clsx(
                 styles.listSong,
                 styles.appear,
-                "animate__animated animate__fadeInRight"
+                "animate__animated animate__fadeInRight shadow-md shadow-gray-400"
               )
             : clsx(styles.listSong)
         }
@@ -183,7 +186,7 @@ const UtilityButtons = () => {
           <p>Danh sách phát</p>
         </div>
         <div className={styles.playlist}>
-          <ListSong data={data[index]} />
+          <ListSong data={songData} />
         </div>
       </div>
     );

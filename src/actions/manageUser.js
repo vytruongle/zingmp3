@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 let localRegister = JSON.parse(localStorage.getItem("register"));
 const localAccount = JSON.parse(localStorage.getItem("account"));
 const localIndexUser = JSON.parse(localStorage.getItem("indexUser"));
+const isChooseList = JSON.parse(localStorage.getItem("isChooseList"));
 
 const initialState = {
   registerList: localRegister || [],
@@ -16,6 +17,7 @@ const initialState = {
     localIndexUser !== undefined && localIndexUser !== null
       ? localRegister[localIndexUser].favorSong
       : [],
+  isChooseList: isChooseList || false,
 };
 
 const manageUser = createSlice({
@@ -30,6 +32,8 @@ const manageUser = createSlice({
     loginForm: (state, action) => {
       state.accountLogin = action.payload.user;
       state.indexUser = action.payload.index;
+      state.favorSong = localRegister[action.payload.index].favorSong;
+      state.favorPlayList = localRegister[action.payload.index].favorPlayList;
       localStorage.setItem("account", JSON.stringify(state.accountLogin));
       localStorage.setItem("indexUser", JSON.stringify(state.indexUser));
     },
@@ -41,6 +45,10 @@ const manageUser = createSlice({
       state.favorSong = [];
       state.favorPlayList = [];
       state.indexUser = undefined;
+    },
+    IS_CHOOSE: (state, action) => {
+      state.isChooseList = action.payload;
+      localStorage.setItem("isChooseList", JSON.stringify(state.isChooseList));
     },
     //handle add/remove favorite songs or favorite playlist
     ADD: (state, action) => {
@@ -85,6 +93,7 @@ export const {
   registerForm,
   loginForm,
   logoutForm,
+  IS_CHOOSE,
   ADD,
   DEL,
   ADD_PLAYLIST,

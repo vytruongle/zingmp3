@@ -21,6 +21,7 @@ const AudioPlayer = (song) => {
   const linkAudio = useSelector((state) => state.listReducer.linkAudio);
   const stateAudio = useSelector((state) => state.audioReducer.isPlaySong);
   const currentSong = useSelector((state) => state.listReducer.chooseSong);
+  const { favorSong, isChooseList } = useSelector((state) => state.manageUser);
   const data = useSelector((state) => state.listReducer.data);
   const volume = useSelector((state) => state.audioReducer.volume);
   const [isRandom, setRandom] = useState(false);
@@ -40,7 +41,7 @@ const AudioPlayer = (song) => {
 
   //handle next or prev song
   const handleNextPrev = (value) => {
-    const newSong = data[index].danhSachBaiHat;
+    const newSong = isChooseList ? favorSong : data[index].danhSachBaiHat;
     if (value === "prev") {
       if (currentSong.id === 0) {
         const newId = newSong.length - 1;
@@ -142,10 +143,9 @@ const AudioPlayer = (song) => {
       }
     }
   };
-
   //handle when song end
   const handleEnded = () => {
-    const newSong = data[index].danhSachBaiHat;
+    const newSong = isChooseList ? favorSong : data[index].danhSachBaiHat;
     if (isRepeat === 0) {
       if (currentSong.id === newSong.length - 1) {
         dispatch(PAUSE_SONG());
@@ -166,19 +166,18 @@ const AudioPlayer = (song) => {
         }, 200);
       }
     } else if (isRepeat === 1) {
+      const newSong = isChooseList ? favorSong : data[index].danhSachBaiHat;
       //check if random btn is active
       if (isRandom) {
-        const randomId = Math.floor(
-          Math.random() * data[index].danhSachBaiHat.length
-        );
+        const randomId = Math.floor(Math.random() * newSong.length);
         dispatch(
           CHOOSE_SONG({
             id: randomId,
-            img: data[index].danhSachBaiHat[randomId].img,
-            title: data[index].danhSachBaiHat[randomId].title,
-            singer: data[index].danhSachBaiHat[randomId].singer,
-            link: data[index].danhSachBaiHat[randomId].link,
-            category: data[index].category,
+            img: newSong[randomId].img,
+            title: newSong[randomId].title,
+            singer: newSong[randomId].singer,
+            link: newSong[randomId].link,
+            category: newSong[randomId].category,
           })
         );
         dispatch(PAUSE_SONG());

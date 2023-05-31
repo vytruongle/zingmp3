@@ -24,18 +24,19 @@ const ListSong = (props) => {
   );
   const navigate = useNavigate();
   const isPlaying = useSelector((state) => state.audioReducer.isPlaySong);
+  const { isChooseList } = useSelector((state) => state.manageUser);
   const title = useSelector((state) => state.listReducer.chooseSong.title);
 
   const dispatch = useDispatch();
 
   const notify = (text) => toast(text);
 
-  const handleHeartIcon = (id, category) => {
+  const handleHeartIcon = (title) => {
     if (registerList.length === 0) {
       return false;
     } else {
       const index = registerList[indexUser]?.favorSong?.findIndex(
-        (item) => item.id === `${id}-${category}`
+        (item) => item.title === title
       );
       if (index > -1) {
         return true;
@@ -46,131 +47,269 @@ const ListSong = (props) => {
   };
 
   const renderList = (data) => {
-    return data.danhSachBaiHat.map((song, id) => {
-      return (
-        <li
-          key={id}
-          onDoubleClick={() => {
-            dispatch(
-              CHOOSE_SONG({
-                id: id,
-                img: song.img,
-                title: song.title,
-                singer: song.singer,
-                link: song.link,
-                category: data.category,
-              })
-            );
-            dispatch(PAUSE_SONG());
-            setTimeout(() => {
-              dispatch(PLAY_SONG());
-            }, 200);
-          }}
-          className={
-            title === song.title
-              ? clsx("flex items-center justify-between mb-3", styles.active)
-              : clsx("flex items-center justify-between mb-3")
-          }
-        >
-          <div className="flex items-center">
-            <div className={clsx(styles.songImg)}>
-              <img src={song.img} alt="" />
-              {isPlaying && title === song.title ? (
-                <PauseOutlined
-                  className={clsx(styles.playIcon)}
-                  onClick={() => {
-                    dispatch(PAUSE_SONG());
-                  }}
-                />
+    if (isChooseList) {
+      return data.map((song, id) => {
+        return (
+          <li
+            key={id}
+            onDoubleClick={() => {
+              dispatch(
+                CHOOSE_SONG({
+                  id: id,
+                  img: song.img,
+                  title: song.title,
+                  singer: song.singer,
+                  link: song.link,
+                  category: data.category,
+                })
+              );
+              dispatch(PAUSE_SONG());
+              setTimeout(() => {
+                dispatch(PLAY_SONG());
+              }, 200);
+            }}
+            className={
+              title === song.title
+                ? clsx(
+                    "flex items-center justify-between mb-3 ml-4",
+                    styles.active
+                  )
+                : clsx("flex items-center justify-between mb-3 ml-4")
+            }
+          >
+            <div className="flex items-center">
+              <div className={clsx(styles.songImg)}>
+                <img src={song.img} alt="" />
+                {isPlaying && title === song.title ? (
+                  <PauseOutlined
+                    className={clsx(styles.playIcon)}
+                    onClick={() => {
+                      dispatch(PAUSE_SONG());
+                    }}
+                  />
+                ) : (
+                  <CaretRightOutlined
+                    className={clsx(styles.playIcon)}
+                    onClick={() => {
+                      dispatch(
+                        CHOOSE_SONG({
+                          id: id,
+                          img: song.img,
+                          title: song.title,
+                          singer: song.singer,
+                          link: song.link,
+                          category: data.category,
+                        })
+                      );
+                      dispatch(PAUSE_SONG());
+                      setTimeout(() => {
+                        dispatch(PLAY_SONG());
+                      }, 200);
+                    }}
+                  />
+                )}
+              </div>
+              <div className={clsx(styles.infoSong)}>
+                <h3>{song.title}</h3>
+                <p>{song.singer}</p>
+              </div>
+            </div>
+            <div className={clsx(styles.heartIcon)}>
+              {handleHeartIcon(song.title) ? (
+                <Tooltip title="Xóa khỏi danh sách">
+                  <Button
+                    shape="circle"
+                    type="text"
+                    onClick={() => {
+                      if (accountLogin) {
+                        notify("Đã xóa khỏi danh sách yêu thích");
+                        dispatch(
+                          DEL({
+                            id: `${id}-${data.category}`,
+                            index: id,
+                            img: song.img,
+                            title: song.title,
+                            singer: song.singer,
+                            link: song.link,
+                            duration: song.duration,
+                            category: data.category,
+                          })
+                        );
+                      } else {
+                        navigate("/login");
+                      }
+                    }}
+                    icon={
+                      <HeartFilled
+                        className={clsx(styles.icon, styles.active)}
+                      />
+                    }
+                  />
+                </Tooltip>
               ) : (
-                <CaretRightOutlined
-                  className={clsx(styles.playIcon)}
-                  onClick={() => {
-                    dispatch(
-                      CHOOSE_SONG({
-                        id: id,
-                        img: song.img,
-                        title: song.title,
-                        singer: song.singer,
-                        link: song.link,
-                        category: data.category,
-                      })
-                    );
-                    dispatch(PAUSE_SONG());
-                    setTimeout(() => {
-                      dispatch(PLAY_SONG());
-                    }, 200);
-                  }}
-                />
+                <Tooltip title="Thêm vào danh sách">
+                  <Button
+                    shape="circle"
+                    type="text"
+                    onClick={() => {
+                      if (accountLogin) {
+                        notify("Đã thêm vào danh sach yêu thích");
+                        dispatch(
+                          ADD({
+                            id: `${id}-${data.category}`,
+                            index: id,
+                            img: song.img,
+                            title: song.title,
+                            singer: song.singer,
+                            link: song.link,
+                            duration: song.duration,
+                            category: data.category,
+                          })
+                        );
+                      } else {
+                        navigate("/login");
+                      }
+                    }}
+                    icon={<HeartOutlined className={clsx(styles.icon)} />}
+                  />
+                </Tooltip>
               )}
             </div>
-            <div className={clsx(styles.infoSong)}>
-              <h3>{song.title}</h3>
-              <p>{song.singer}</p>
+          </li>
+        );
+      });
+    } else {
+      return data.danhSachBaiHat.map((song, id) => {
+        return (
+          <li
+            key={id}
+            onDoubleClick={() => {
+              dispatch(
+                CHOOSE_SONG({
+                  id: id,
+                  img: song.img,
+                  title: song.title,
+                  singer: song.singer,
+                  link: song.link,
+                  category: data.category,
+                })
+              );
+              dispatch(PAUSE_SONG());
+              setTimeout(() => {
+                dispatch(PLAY_SONG());
+              }, 200);
+            }}
+            className={
+              title === song.title
+                ? clsx(
+                    "flex items-center justify-between mb-3 ml-4",
+                    styles.active
+                  )
+                : clsx("flex items-center justify-between mb-3 ml-4")
+            }
+          >
+            <div className="flex items-center">
+              <div className={clsx(styles.songImg)}>
+                <img src={song.img} alt="" />
+                {isPlaying && title === song.title ? (
+                  <PauseOutlined
+                    className={clsx(styles.playIcon)}
+                    onClick={() => {
+                      dispatch(PAUSE_SONG());
+                    }}
+                  />
+                ) : (
+                  <CaretRightOutlined
+                    className={clsx(styles.playIcon)}
+                    onClick={() => {
+                      dispatch(
+                        CHOOSE_SONG({
+                          id: id,
+                          img: song.img,
+                          title: song.title,
+                          singer: song.singer,
+                          link: song.link,
+                          category: data.category,
+                        })
+                      );
+                      dispatch(PAUSE_SONG());
+                      setTimeout(() => {
+                        dispatch(PLAY_SONG());
+                      }, 200);
+                    }}
+                  />
+                )}
+              </div>
+              <div className={clsx(styles.infoSong)}>
+                <h3>{song.title}</h3>
+                <p>{song.singer}</p>
+              </div>
             </div>
-          </div>
-          <div className={clsx(styles.heartIcon)}>
-            {handleHeartIcon(id, data.category) ? (
-              <Tooltip title="Xóa khỏi danh sách">
-                <Button
-                  shape="circle"
-                  type="text"
-                  onClick={() => {
-                    if (accountLogin) {
-                      notify("Đã xóa khỏi danh sách yêu thích");
-                      dispatch(
-                        DEL({
-                          id: `${id}-${data.category}`,
-                          index: id,
-                          img: song.img,
-                          title: song.title,
-                          singer: song.singer,
-                          link: song.link,
-                          duration: song.duration,
-                          category: data.category,
-                        })
-                      );
-                    } else {
-                      navigate("/login");
+            <div className={clsx(styles.heartIcon)}>
+              {handleHeartIcon(song.title) ? (
+                <Tooltip title="Xóa khỏi danh sách">
+                  <Button
+                    shape="circle"
+                    type="text"
+                    onClick={() => {
+                      if (accountLogin) {
+                        notify("Đã xóa khỏi danh sách yêu thích");
+                        dispatch(
+                          DEL({
+                            id: `${id}-${data.category}`,
+                            index: id,
+                            img: song.img,
+                            title: song.title,
+                            singer: song.singer,
+                            link: song.link,
+                            duration: song.duration,
+                            category: data.category,
+                          })
+                        );
+                      } else {
+                        navigate("/login");
+                      }
+                    }}
+                    icon={
+                      <HeartFilled
+                        className={clsx(styles.icon, styles.active)}
+                      />
                     }
-                  }}
-                  icon={
-                    <HeartFilled className={clsx(styles.icon, styles.active)} />
-                  }
-                />
-              </Tooltip>
-            ) : (
-              <Tooltip title="Thêm vào danh sách">
-                <Button
-                  shape="circle"
-                  type="text"
-                  onClick={() => {
-                    if (accountLogin) {
-                      notify("Đã thêm vào danh sach yêu thích");
-                      dispatch(
-                        ADD({
-                          id: `${id}-${data.category}`,
-                          index: id,
-                          img: song.img,
-                          title: song.title,
-                          singer: song.singer,
-                          link: song.link,
-                          duration: song.duration,
-                          category: data.category,
-                        })
-                      );
-                    } else {
-                      navigate("/login");
-                    }
-                  }}
-                  icon={<HeartOutlined className={clsx(styles.icon)} />}
-                />
-              </Tooltip>
-            )}
-          </div>
-        </li>
-      );
-    });
+                  />
+                </Tooltip>
+              ) : (
+                <Tooltip title="Thêm vào danh sách">
+                  <Button
+                    shape="circle"
+                    type="text"
+                    onClick={() => {
+                      if (accountLogin) {
+                        notify("Đã thêm vào danh sach yêu thích");
+                        dispatch(
+                          ADD({
+                            id: `${id}-${data.category}`,
+                            index: id,
+                            img: song.img,
+                            title: song.title,
+                            singer: song.singer,
+                            link: song.link,
+                            duration: song.duration,
+                            category: data.category,
+                          })
+                        );
+                      } else {
+                        navigate("/login");
+                      }
+                    }}
+                    icon={<HeartOutlined className={clsx(styles.icon)} />}
+                  />
+                </Tooltip>
+              )}
+            </div>
+          </li>
+        );
+      });
+    }
   };
   return (
     <div className="container mx-auto">

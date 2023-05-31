@@ -10,7 +10,11 @@ import {
 } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { LOAD_DATA } from "../../../actions/listSlice";
-import { ADD_PLAYLIST, DEL_PLAYLIST } from "../../../actions/manageUser";
+import {
+  ADD_PLAYLIST,
+  DEL_PLAYLIST,
+  IS_CHOOSE,
+} from "../../../actions/manageUser";
 import { PAUSE_SONG, PLAY_SONG } from "../../../actions/audioSlice";
 import ListNewSong from "../../../components/ListNewSong";
 import { toast } from "react-toastify";
@@ -68,7 +72,10 @@ const Discovery = () => {
       return (
         <Button
           type="link"
-          className={clsx(styles.carousel)}
+          className={clsx(
+            styles.carousel,
+            "md:h-[200px] xl:h-[300px] 3xl:h-[500px]"
+          )}
           key={item.id}
           onClick={() => {
             navigate(`/album/album:${item.id}`);
@@ -91,6 +98,7 @@ const Discovery = () => {
             alt=""
             onClick={() => {
               navigate(`/album/album:${item.id}`);
+              dispatch(IS_CHOOSE(false));
               localStorage.setItem("data", JSON.stringify(item));
             }}
           />
