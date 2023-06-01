@@ -57,7 +57,6 @@ const Personal = () => {
 
   const renderFavorSong = () => {
     return listSong?.map((item, id) => {
-      console.log(item.duration);
       return (
         <Row
           gutter={16}
@@ -80,9 +79,8 @@ const Personal = () => {
                 }}
               >
                 <img src={item.img} alt={item.img} />
-                {isPlaying &&
-                index === item.index &&
-                item.title === titleSong ? (
+
+                {isPlaying && index === id && item.title === titleSong ? (
                   <PauseOutlined className={clsx(styles.btnControl)} />
                 ) : (
                   <CaretRightOutlined className={clsx(styles.btnControl)} />

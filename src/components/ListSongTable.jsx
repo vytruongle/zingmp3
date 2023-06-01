@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { CaretRightOutlined, PauseOutlined } from "@ant-design/icons";
 
 import styles from "../sass/components/listSongTable.module.scss";
+import { IS_CHOOSE } from "../actions/manageUser";
 
 const ListSongTable = ({ danhSachBaiHat, category }) => {
   const dispatch = useDispatch();
@@ -45,6 +46,7 @@ const ListSongTable = ({ danhSachBaiHat, category }) => {
           key={id}
           onDoubleClick={() => {
             handlePlaySong(item, id);
+            dispatch(IS_CHOOSE(false));
           }}
         >
           <Col span={2}>{selNum(id + 1)}</Col>
@@ -54,6 +56,7 @@ const ListSongTable = ({ danhSachBaiHat, category }) => {
                 className={clsx(styles.imgSong)}
                 onClick={() => {
                   handlePlaySong(item, id);
+                  dispatch(IS_CHOOSE(false));
                 }}
               >
                 <img src={item.img} alt={item.img} />

@@ -186,7 +186,7 @@ const data = [
       {
         title: "Like Ohh-Ahh",
         singer: "Twice",
-        img: "https://avatar-ex-swe.nixcdn.com/song/2020/07/31/c/5/8/9/1596188259603_500.jpg",
+        img: "https://avatar-ex-swe.nixcdn.com/song/2023/01/13/e/7/9/d/1673583438228_500.jpg",
         link: LikeOhh,
         duration: "03:35",
       },
@@ -272,7 +272,7 @@ const data = [
       {
         title: "Dynasty",
         singer: "MIIA",
-        img: "https://avatar-ex-swe.nixcdn.com/song/2020/07/31/c/5/8/9/1596188259603_500.jpg",
+        img: "https://avatar-ex-swe.nixcdn.com/song/2019/07/26/c/d/3/8/1564128412708_500.jpg",
         link: dynasty,
         duration: "03:46",
       },

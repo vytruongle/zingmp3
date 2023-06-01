@@ -12,7 +12,7 @@ import {
 import styles from "../sass/components/songDetail.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { CHOOSE_SONG } from "../actions/listSlice";
-import { ADD_PLAYLIST, DEL_PLAYLIST } from "../actions/manageUser";
+import { ADD_PLAYLIST, DEL_PLAYLIST, IS_CHOOSE } from "../actions/manageUser";
 import { PAUSE_SONG, PLAY_SONG } from "../actions/audioSlice";
 import { useNavigate } from "react-router-dom";
 
@@ -93,6 +93,7 @@ const SongDetail = () => {
                 className={clsx(styles.imgSong)}
                 onClick={() => {
                   handlePlaySong(item, id);
+                  dispatch(IS_CHOOSE(false));
                 }}
               >
                 <img src={item.img} alt="" />

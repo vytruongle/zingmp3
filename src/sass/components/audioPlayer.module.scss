@@ -9,9 +9,12 @@
   .repeatIcon {
     color: #fff;
     font-size: 24px;
+    position: relative;
     .repeatOne {
       font-size: 26px;
-      margin-top: 5px;
+      position: absolute;
+      top: 0;
+      right: 0;
     }
   }
 }
