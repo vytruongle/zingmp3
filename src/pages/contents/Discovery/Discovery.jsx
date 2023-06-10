@@ -74,7 +74,7 @@ const Discovery = () => {
           type="link"
           className={clsx(
             styles.carousel,
-            "md:h-[200px] xl:h-[300px] 3xl:h-[500px]"
+            "md:h-[200px] xl:h-[300px] 3xl:h-[400px]"
           )}
           key={item.id}
           onClick={() => {
@@ -168,7 +168,7 @@ const Discovery = () => {
   };
 
   return (
-    <div className={clsx(styles.item)}>
+    <div className={clsx(styles.item, "3xl:px-60")}>
       <div className="mx-auto px-6">
         {/* carousel */}
         <Carousel
