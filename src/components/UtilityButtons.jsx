@@ -177,7 +177,7 @@ const UtilityButtons = () => {
             ? clsx(
                 styles.listSong,
                 styles.appear,
-                "animate__animated animate__fadeInRight shadow-md shadow-gray-400"
+                "animate__animated animate__fadeInRight shadow-md shadow-gray-400 xl:w-[22%] md:w-[50%]"
               )
             : clsx(styles.listSong)
         }
@@ -197,7 +197,7 @@ const UtilityButtons = () => {
   };
   return (
     <div className={clsx("flex items-center justify-center", styles.volume)}>
-      <div className={clsx("ms-5", styles.windowMode)}>
+      <div className={clsx("ms-5 md:hidden xl:block", styles.windowMode)}>
         <BorderOutlined
           className={clsx(styles.icon)}
           style={{

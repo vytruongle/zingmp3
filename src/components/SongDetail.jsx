@@ -1,4 +1,4 @@
-import { Row, Col, Image, Button, Tooltip } from "antd";
+import { Row, Col, Button, Tooltip } from "antd";
 import clsx from "clsx";
 import React from "react";
 import {
@@ -103,13 +103,15 @@ const SongDetail = () => {
                   <CaretRightOutlined className={clsx(styles.btnControl)} />
                 )}
               </div>
-              <h3>{item.title}</h3>
+              <h3 className="truncate md:text-sm xl:text-[18px]">
+                {item.title}
+              </h3>
             </div>
           </td>
-          <td className="px-6 py-4 ">
+          <td className="px-6 py-4 md:text-md xl:text-[18px]">
             <p className={clsx(styles.singer)}>{item.singer}</p>
           </td>
-          <td className="px-6 py-4 ">
+          <td className="px-6 py-4  md:text-md xl:text-[18px]">
             <p className={clsx(styles.singer)}>{item.duration}</p>
           </td>
         </tr>
@@ -117,7 +119,12 @@ const SongDetail = () => {
     });
   };
   return (
-    <div className={clsx(styles.songDetail)}>
+    <div
+      className={clsx(
+        styles.songDetail,
+        "md:w-full xl:left-[15%] xl:w-[85%] md:px-10"
+      )}
+    >
       <div className="w-[96%] mx-auto">
         <Row justify={"space-between"} align={"center"}>
           <Col
@@ -125,10 +132,16 @@ const SongDetail = () => {
             style={{ marginTop: "40px" }}
             className="text-center leading-[1.8]"
           >
-            <Image src={data?.img} width={360} className={styles.image} />
+            <img
+              src={data?.img}
+              alt=""
+              className={clsx(styles.image, "md:w-48 md:h-48 xl:w-96 xl:h-96")}
+            />
             <div className={clsx(styles.detailInfo)}>
-              <h1>Những bài {data?.category} hay nhất</h1>
-              <p>{like} người yêu thích</p>
+              <h1 className="md:text-md xl:text-[20px]">
+                Những bài {data?.category} hay nhất
+              </h1>
+              <p className="md:text-sm xl:text-base">{like} người yêu thích</p>
               <div className="flex items-center justify-center mt-3">
                 {isPlaying && category === data.category ? (
                   <Button
@@ -208,7 +221,9 @@ const SongDetail = () => {
                   </th>
                   <th className="px-6 py-3">BÀI HÁT</th>
                   <th className="px-6 py-3">CA SĨ</th>
-                  <th className="px-6 py-3">THỜI GIAN</th>
+                  <th className="px-6 py-3 md:px-0 md:text-center">
+                    THỜI GIAN
+                  </th>
                 </tr>
               </thead>
               <tbody>{renderSongs()}</tbody>

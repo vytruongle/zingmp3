@@ -69,7 +69,7 @@ const Personal = () => {
           }}
           key={id}
         >
-          <Col span={6}>
+          <Col span={10}>
             <div className="flex items-center leading-[2] gap-1">
               <div
                 className={clsx(styles.imgSong)}
@@ -87,15 +87,15 @@ const Personal = () => {
                 )}
               </div>
               <div className={styles.info}>
-                <h3>{item.title}</h3>
-                <p>{item.singer}</p>
+                <h3 className="md:text-sm xl:text-[18px]">{item.title}</h3>
+                <p className="md:text-sm xl:text-[18px]">{item.singer}</p>
               </div>
             </div>
           </Col>
-          <Col span={12} className="text-center">
+          <Col span={8} className="text-center">
             <p style={{ color: "#7b7584" }}>{item.title}(Single)</p>
           </Col>
-          <Col span={6} className="text-center">
+          <Col span={6} className="text-end">
             <p style={{ color: "#7b7584" }}>{item.duration}</p>
           </Col>
           {handleHeartIcon(item.title) ? (
@@ -187,7 +187,10 @@ const Personal = () => {
     }
   };
   return (
-    <div id={clsx(styles.personal)}>
+    <div
+      id={clsx(styles.personal)}
+      className="md:w-full xl:left-[15%] xl:w-[85%] md:px-10"
+    >
       <div className=" container mx-auto px-8">
         <h1>Thư viện</h1>
         <Tabs tabBarGutter={16} defaultActiveKey="1" items={items} />

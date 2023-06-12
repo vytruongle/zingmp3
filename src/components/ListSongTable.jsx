@@ -66,17 +66,19 @@ const ListSongTable = ({ danhSachBaiHat, category }) => {
                   <CaretRightOutlined className={clsx(styles.btnControl)} />
                 )}
               </div>
-              <div className={styles.title}>
-                <h3>{item.title}</h3>
+              <div className={clsx(styles.title, "w-[80%] truncate")}>
+                <h3 className="md:text-md font-semibold xl:text-[18px]">
+                  {item.title}
+                </h3>
                 <p>{item.singer}</p>
               </div>
             </div>
           </Col>
           <Col span={8}>
-            <p>{item.title} (Single)</p>
+            <p className="text-center">{item.title} (Single)</p>
           </Col>
           <Col span={4}>
-            <p>{item.duration}</p>
+            <p className="text-end">{item.duration}</p>
           </Col>
         </Row>
       );

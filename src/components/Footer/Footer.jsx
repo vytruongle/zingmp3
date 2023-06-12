@@ -39,18 +39,20 @@ const Footer = () => {
 
   const notify = (text) => toast(text);
   return (
-    <div className={clsx(styles.footer)}>
-      <div className="grid grid-cols-4 gap-4 items-center">
-        <div className="flex items-center">
+    <div className={clsx(styles.footer, "md:px-3 ssm:w-full")}>
+      <div className="flex flex-wrap items-center">
+        <div className=" basis-1/4 flex items-center">
           <Avatar
             shape="square"
             src={<img src={song.img} alt="twice logo" />}
-            size={64}
-            className={clsx(styles.songAvatar)}
+            className={clsx(
+              styles.songAvatar,
+              "md:w-12 md:h-12 xl:w-16 xl:h-16"
+            )}
           />
           <div className={clsx(styles.songInfo)}>
-            <h3>{song.title}</h3>
-            <p>{song.singer}</p>
+            <h3 className="md:text-xs xl:text-[18px]">{song.title}</h3>
+            <p className="md:text-[10px] xl:text-base">{song.singer}</p>
           </div>
           <div>
             {heartDisplay ? (
@@ -136,10 +138,10 @@ const Footer = () => {
             )}
           </div>
         </div>
-        <div className="col-span-2 text-center">
+        <div className="basis-1/2 text-center">
           <AudioPlayer song={song} />
         </div>
-        <div>
+        <div className="basis-1/4">
           <UtilityButtons />
         </div>
       </div>

@@ -1,10 +1,6 @@
 import React, { useState } from "react";
 import clsx from "clsx";
-import {
-  SearchOutlined,
-  SettingOutlined,
-  LogoutOutlined,
-} from "@ant-design/icons";
+import { SearchOutlined, LogoutOutlined } from "@ant-design/icons";
 import { Input, Avatar } from "antd";
 
 import styles from "../../sass/pages/Header.module.scss";
@@ -76,9 +72,14 @@ const Header = () => {
   };
 
   return (
-    <div className={clsx(styles.header)}>
-      <div className="grid grid-cols-3 gap-4 items-baseline w-[95%] mx-auto">
-        <div className="col-span-2">
+    <div
+      className={clsx(
+        styles.header,
+        "ssm:w-full md:w-full xl:w-[85%] xl:left-[15%]"
+      )}
+    >
+      <div className="flex flex-wrap gap-4 items-baseline w-[95%] mx-auto pl-6 justify-between ssm:gap-0">
+        <div className="basis-2/3 ssm:p-2">
           <Input
             className={
               isFocus ? clsx(styles.search, styles.focus) : clsx(styles.search)
@@ -102,20 +103,20 @@ const Header = () => {
           />
         </div>
         <div className="flex items-center justify-end gap-2">
-          <div className={clsx("me-3", styles.icon)}>
-            <SettingOutlined />
-          </div>
           {user ? (
             <div className="flex items-center gap-2">
               <div style={{ margin: "12px 0" }}>
-                <Avatar src={<img src={avatar} alt="avatar" />} size={35} />
+                <Avatar
+                  src={<img src={avatar} alt="avatar" />}
+                  size={{ xs: 24 }}
+                />
               </div>
               <p
                 onClick={() => {
                   dispatch(logoutForm());
                   navigate("/");
                 }}
-                className="flex items-center gap-1 flex-wrap text-white text-lg font-semibold cursor-pointer hover:text-red-500"
+                className="flex items-center gap-1 flex-wrap text-white md:text-lg xl:text-lg font-semibold cursor-pointer hover:text-red-500 ssm:text-[10px]"
               >
                 | Đăng xuất
                 <LogoutOutlined />
@@ -127,7 +128,7 @@ const Header = () => {
               onClick={() => {
                 navigate("/login");
               }}
-              className="mt-3 focus:outline-none text-white bg-[#9b4de0] hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
+              className="mt-3 focus:outline-none text-white bg-[#9b4de0] hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg xl:text-sm md:text-sm ssm:text-[10px] px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
             >
               Đăng nhập
             </button>

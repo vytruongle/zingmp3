@@ -5,20 +5,21 @@
   @include bgContent($bg-header);
 
   .image {
-    @include stylesImg("cover", 100%);
+    margin: auto;
+    object-fit: cover;
+    object-position: cover;
+    border-radius: 10px;
     margin-bottom: 16px;
   }
 
   .detailInfo {
     text-align: center;
     h1 {
-      font-size: $fs-2;
       color: $primary;
       font-weight: 500;
     }
     p {
       color: $color-info;
-      font-size: $fs-3;
       font-weight: 500;
     }
 
@@ -64,11 +65,11 @@
     align-items: center;
     .imgSong {
       position: relative;
-
+      width: 60px !important;
+      margin-right: 8px;
       img {
-        width: 60px;
-        height: 60px;
-        margin-right: 8px;
+        height: 60px !important;
+
         border-radius: 5px;
         cursor: pointer;
       }
@@ -86,12 +87,10 @@
       }
     }
     h3 {
-      font-size: $fs-3;
       color: $primary;
     }
   }
   .singer {
-    font-size: $fs-3;
     color: $color-info;
   }
 

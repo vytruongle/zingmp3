@@ -30,7 +30,7 @@ const AudioControl = (props) => {
     const min = Math.floor(`${duration}` / 60);
     const sec = `${duration}` - min * 60;
     return (
-      <span style={{ color: "#fff" }}>
+      <span style={{ color: "#fff" }} className="md:text-xs xl:text-lg">
         {min < 10 ? `0${min}` : min}:
         {Math.floor(sec) < 10 ? `0${Math.floor(sec)}` : `${Math.floor(sec)}`}
       </span>
@@ -40,7 +40,7 @@ const AudioControl = (props) => {
   return (
     <div className="w-full">
       <div className="flex items-center">
-        <span style={{ color: "#fff" }}>
+        <span style={{ color: "#fff" }} className="md:text-xs xl:text-lg">
           {min < 10 ? `0${min}` : min}: {sec < 10 ? `0${sec}` : sec}
         </span>
         <Slider
@@ -52,7 +52,7 @@ const AudioControl = (props) => {
           trackStyle={{ background: trackingStyles }}
           onChange={(e) => onScrub(e)}
           dots={false}
-          style={{ width: "85%" }}
+          style={{ width: "80%", margin: "auto" }}
         />
         {durationSong()}
       </div>

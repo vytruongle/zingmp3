@@ -86,13 +86,13 @@ const SearchList = () => {
           <Col span={12}>
             <div className="flex items-center">
               <div
-                className={clsx(styles.imgSong)}
+                className={clsx(styles.imgSong, "w-[60px]")}
                 onClick={() => {
                   handlePlaySong(item, id);
                 }}
               >
                 <img
-                  className="w-[60px] h-[60px] rounded-md mr-3"
+                  className=" max-w-[60px] w-[60px] h-[60px] rounded-md"
                   src={item.img}
                   alt={item.img}
                 />
@@ -102,8 +102,10 @@ const SearchList = () => {
                   <CaretRightOutlined className={clsx(styles.btnControl)} />
                 )}
               </div>
-              <div className="text-white leading-6">
-                <h1 className="font-semibold text-[1rem]">{item.title}</h1>
+              <div className="text-white leading-6 truncate ml-3">
+                <h1 className="font-semibold text-[1rem] truncate">
+                  {item.title}
+                </h1>
                 <p className="text-[#7b7584] text-[0.75rem]">{item.singer}</p>
               </div>
             </div>
@@ -243,7 +245,10 @@ const SearchList = () => {
     },
   ];
   return (
-    <div id={clsx(styles.search)}>
+    <div
+      id={clsx(styles.search)}
+      className="md:w-full xl:left-[15%] xl:w-[85%] md:px-10"
+    >
       <div className="w-[95%] mx-auto">
         {word && searchList.length > 0 ? (
           <Tabs defaultActiveKey="1" items={items} />

@@ -74,7 +74,7 @@ const Discovery = () => {
           type="link"
           className={clsx(
             styles.carousel,
-            "md:h-[200px] xl:h-[300px] 3xl:h-[400px]"
+            "ssm:h-[80px] md:h-[200px] xl:h-[300px] 2xl:h-[400px] 3xl:h-[400px]"
           )}
           key={item.id}
           onClick={() => {
@@ -82,7 +82,7 @@ const Discovery = () => {
             localStorage.setItem("data", JSON.stringify(item));
           }}
         >
-          <img src={item.img} alt="" />
+          <img src={item.img} alt="" className="w-full" />
         </Button>
       );
     });
@@ -168,7 +168,12 @@ const Discovery = () => {
   };
 
   return (
-    <div className={clsx(styles.item, "3xl:px-60")}>
+    <div
+      className={clsx(
+        styles.item,
+        "3xl:px-60 ssm:w-full md:w-full xl:left-[15%] xl:w-[85%] md:px-10"
+      )}
+    >
       <div className="mx-auto px-6">
         {/* carousel */}
         <Carousel
@@ -217,7 +222,7 @@ const Discovery = () => {
         {/* footer of page */}
         <div className={clsx(styles.footer, "px-4")}>
           <h1>ĐỐI TÁC ÂM NHẠC</h1>
-          <Row justify="space-between" align="middle">
+          <Row justify="space-between" align="middle" gutter={8}>
             <Col span={4}>
               <Image className={clsx(styles.imgLogo)} src={JYP} />
             </Col>
